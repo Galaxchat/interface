@@ -89,7 +89,7 @@ export default function App() {
           <TopLevelModals />
           <Suspense fallback={<Loader />}>
             <Switch>
-              <Route exact strict path="/chat" component={Chat} />
+              <Route exact strict path="/" component={Chat} />
               {/* <Route component={RedirectPathToSwapOnly} /> */}
             </Switch>
           </Suspense>

@@ -290,7 +290,7 @@ export default function Header() {
           </AccountElement>
         </HeaderElement>
         <HeaderElement>
-          <Menu />
+          {/* <Menu /> */}
         </HeaderElement>
       </HeaderControls>
     </HeaderFrame>
