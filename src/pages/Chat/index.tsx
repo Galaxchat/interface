@@ -96,7 +96,7 @@ export default function Chat({ history }: RouteComponentProps) {
         />
       </AutoColumn>
       <AppBody>
-        <Wrapper id="swap-page" style={{ border: '1px solid #0a0406', padding: '0px' }}>
+        <Wrapper id="swap-page" style={{ border: '1px solid #0a0406', padding: '0px', borderRadius: '24px' }}>
           <AutoColumn gap={'md'}>
             <AutoRow justify="center" style={{ }}>
               progress bar
