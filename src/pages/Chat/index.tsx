@@ -95,7 +95,7 @@ import { TextInput, ResizingTextArea } from "components/TextInput";
 import { useERC721Contract, useContract, useChatContract } from '../../hooks/useContract'
 import { Contract, ethers } from "ethers";
 import CHAT_ABI from 'abis/chat.json'
-import { TransactionResponse,TransactionReceipt } from "@ethersproject/abstract-provider"
+import { TransactionResponse } from "@ethersproject/abstract-provider"
 // import { CHAT_ADDRESSES } from 'constants/addresses'
 
 const AlertWrapper = styled.div`
@@ -115,26 +115,19 @@ export default function Chat({ history }: RouteComponentProps) {
   // const erc721Contract = useERC721Contract(searchQuery)
 
   // const sendContract = useChatContract()
-  const { account ,provider } = useActiveWeb3React()
-  
-
-  const CHAT_ADDRESSES = '0x1B319A59B37aB895247217cc12df2703bA1c3265'
-  const chatContract = new ethers.Contract(CHAT_ADDRESSES, CHAT_ABI, provider)
-  
+  const { account, provider } = useActiveWeb3React()
   const signer = provider?.getSigner()
-  console.log("signer:",signer)
+  const CHAT_ADDRESSES = '0x2678064A46516e27D59976088Fb07d93FAFE9b25'
   const chatSendContract = new ethers.Contract(CHAT_ADDRESSES, CHAT_ABI, signer)
 
   const inputRef = useRef<HTMLInputElement>();
 
-  const handleWrite = (token:string) => { 
+  const handleChatRoom = (_chatroom: string, _sender: string, _content: string) => {
     console.log(
-      "handlewrite"
+      _chatroom,
+      _sender,
+      _content
     )
-  }
-  if (enterQuery && provider){
-    console.log(chatContract)
-
   }
 
   const handleInput = useCallback((event) => {
@@ -142,13 +135,24 @@ export default function Chat({ history }: RouteComponentProps) {
     setSearchQuery(input);
   }, []);
 
-  const handleEnter = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+  const handleEnter = useCallback(async (e: KeyboardEvent<HTMLInputElement>) => {
+    if (enterQuery && provider) {
+      chatSendContract.on("Send", (chatroom, sender, content, id) => {
+        console.log("SendEvent",
+          chatroom,
+          sender,
+          content,
+          id
+        )
+      })
+    }
     if (e.key === "Enter") {
       setEnterQuery(searchQuery)
-      
+
 
     }
   }, [searchQuery, enterQuery]);
+
 
 
   const onClickCreateLp = useCallback(() => {
@@ -156,15 +160,13 @@ export default function Chat({ history }: RouteComponentProps) {
   }, []);
 
 
- const onClickSend = useCallback(async () => {
+  const onClickSend = useCallback(async () => {
     console.log("click send button");
     console.log("inputMessage:", inputMessage)
-    await chatSendContract.send("0xe37eBE5884017C3dfbB9187E70976280Ea4202e0", account, inputMessage, {
-      gasLimit: 350000
-    })
-    .then((tx: TransactionResponse) => {
-      console.log(tx)
-    }).catch((e:Error)=>console.log(e))
+    await chatSendContract.send("0xe37eBE5884017C3dfbB9187E70976280Ea4202e0", account, inputMessage, { })
+      .then((tx: TransactionResponse) => {
+        console.log(tx)
+      }).catch((e: Error) => console.log(e))
   }, [inputMessage]);
 
 
