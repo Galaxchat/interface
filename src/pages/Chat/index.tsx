@@ -99,9 +99,10 @@ export default function Chat({ history }: RouteComponentProps) {
   const account = chatUniSendContract?.signer.getAddress()
 
   const changeEnterQuery = (query: string) => {
+    console.log("changeEnterQuery:", query)
     setEnterQuery(query)
   }
-  
+
   const onClickCreateLp = useCallback(() => {
     console.log("click creat lp button");
   }, []);
