@@ -14,17 +14,18 @@ import {
 import { t, Trans } from "@lingui/macro";
 import { TransactionResponse } from "@ethersproject/abstract-provider"
 
-export default function ChatSend(props:any) {
+export default function ChatSend(props: any) {
 	const [inputMessage, setInputMessage] = useState<string>("");
 
 	const onClickSend = useCallback(async () => {
 		console.log("click send button");
 		console.log("inputMessage:", inputMessage);
-		console.log("chatContract:", props.chatContract);
+		console.log("chatContract props:", props);
 		if (props.account && props.chatContract) {
 			props.chatContract?.send(props.chatRoomAddress, props.account, inputMessage, {})
 				.then((tx: TransactionResponse) => {
 					console.log(tx)
+					setInputMessage("")
 				}).catch((e: Error) => console.log(e))
 		}
 	}, [inputMessage]);
