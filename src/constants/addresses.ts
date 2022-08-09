@@ -112,3 +112,10 @@ export const TICK_LENS_ADDRESSES: AddressMap = {
   [SupportedChainId.ARBITRUM_ONE]: '0xbfd8137f7d1516D3ea5cA83523914859ec47F573',
   [SupportedChainId.ARBITRUM_RINKEBY]: '0xbfd8137f7d1516D3ea5cA83523914859ec47F573',
 }
+
+export const GALAX_CHAT_ADDRESSES: AddressMap = {
+  [SupportedChainId.MAINNET]: '',
+  [SupportedChainId.ROPSTEN]: '',
+  [SupportedChainId.GOERLI]: '0x2678064A46516e27D59976088Fb07d93FAFE9b25',
+  [SupportedChainId.RINKEBY]: '0x1B319A59B37aB895247217cc12df2703bA1c3265',
+}
