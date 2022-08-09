@@ -5,12 +5,12 @@ import CHAT_ABI from 'abis/galax-chat-message.json'
 
 
 
-export default function ChatContent({ history }: RouteComponentProps) {
-
-
-
-
-    
+export default function ChatContent(props:any) {
+    return (
+        <>
+        <div>chat</div>
+        </>
+    )
 }
 
 

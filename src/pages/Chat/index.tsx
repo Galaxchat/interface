@@ -84,6 +84,7 @@ import { Contract, ethers } from "ethers";
 import CHAT_ABI from 'abis/galax-chat-message.json'
 import { TransactionResponse } from "@ethersproject/abstract-provider"
 import ChatSend from "components/chat/ChatSend";
+import ChatContent from "components/chat/ChatContent";
 
 const AlertWrapper = styled.div`
   max-width: 460px;
@@ -186,7 +187,7 @@ export default function Chat({ history }: RouteComponentProps) {
             </AutoRow>
             <Separator />
             <AutoRow justify="center" style={{}}>
-              chat
+              <ChatContent />
             </AutoRow>
             <Separator />
             <AutoRow justify="center" style={{ paddingBottom: '5px' }}>
