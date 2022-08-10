@@ -116,6 +116,6 @@ export const TICK_LENS_ADDRESSES: AddressMap = {
 export const GALAX_CHAT_ADDRESSES: AddressMap = {
   [SupportedChainId.MAINNET]: '',
   [SupportedChainId.ROPSTEN]: '',
-  [SupportedChainId.GOERLI]: '0x2678064A46516e27D59976088Fb07d93FAFE9b25',
+  [SupportedChainId.GOERLI]: '0xB56A3b24bcb957916acd44199225E06D32b605AA',
   [SupportedChainId.RINKEBY]: '0x1B319A59B37aB895247217cc12df2703bA1c3265',
 }

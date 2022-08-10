@@ -25,6 +25,12 @@
           "internalType": "uint256",
           "name": "_id",
           "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
         }
       ],
       "name": "Send",

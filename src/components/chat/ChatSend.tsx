@@ -12,11 +12,10 @@ export default function ChatSend(props: any) {
     if (account && chatContract && chatRoomAddress) {
       chatContract?.send(chatRoomAddress, account, inputMessage, {})
         .then((tx: TransactionResponse) => {
-          console.log(tx)
           setInputMessage("")
         }).catch((e: Error) => {
           console.log(e)
-          
+
         })
     }
   }, [inputMessage, account, chatContract,  chatRoomAddress ]);

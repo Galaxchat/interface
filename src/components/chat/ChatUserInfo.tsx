@@ -5,7 +5,6 @@ import jazzicon from '@metamask/jazzicon'
 
 
 export default function ChatUserInfo(props: any) {
-  console.log("ChatUserInfo props ", props)
   const { address, type } = props
   const { avatar } = useENSAvatar(address ?? undefined)
   const ENSName = useENSName(address).ENSName

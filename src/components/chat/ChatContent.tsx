@@ -43,19 +43,27 @@ export default function ChatContent(props: any) {
 
   // ]
 
+  
+
+
   useEffect(() => {
     let contentListTemp = [...contentList]
     if (enterQuery && chatContract && account) {
       // setContentList(testData)
-      chatContract.on("Send", (chatroom: any, sender: any, content: any, id: any, block: any, timestamp: any) => {
+      chatContract.on("Send", (chatroom: any, sender: any, content: any, id: any, timestamp: any, blockNumber: any) => {
         if (enterQuery === chatroom) {
+          let d = new Date(parseInt(timestamp.toString()+'000'))
+          const time = d.getFullYear().toString()+'-'+ (d.getMonth()+1).toString()+'-'+ d.getDate().toString()+' '+ 
+          (d.getHours()-8).toString()+':'+d.getMinutes().toString()+':'+ d.getSeconds().toString()
           contentListTemp.push(
             {
               address: sender,
               content: content,
-              time: 'Mon 08:17 PM'
+              timestamp: timestamp.toString(),
+              time: time
             }
           )
+          console.log(contentListTemp)
           setContentList(contentListTemp)
         }
       })
@@ -65,14 +73,11 @@ export default function ChatContent(props: any) {
     //     console.log("off send event")
     //   })
     // }
-  }, [enterQuery, contentList, account ,chatContract]);
-
-  console.log("contentList:", contentList)
+  }, [enterQuery, contentList, account, chatContract]);
 
   return (
     <ChatRoom>
       {contentList.map((data: any, index: number) => {
-        console.log("data:", data)
         return (
           <div key={data + index}>
             <div className="d-flex align-items-end">
@@ -87,7 +92,7 @@ export default function ChatContent(props: any) {
                       address={data.address}
                       type='name'
                     />
-                    <span>on {data.time}</span>
+                    <span>on {data.time} GMT+0000</span>
 
                   </div>
                   <span>{data.content}</span>
