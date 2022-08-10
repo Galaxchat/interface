@@ -1,17 +1,7 @@
-import React, { useContext, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { AutoColumn } from "../../components/Column";
-import { AutoRow } from "../../components/Row";
-import { TextInput, ResizingTextArea } from "components/TextInput";
-import Loader from "../../components/Loader";
-import {
-  BaseButton,
-  ButtonConfirmed,
-  ButtonError,
-  ButtonLight,
-  ButtonPrimary,
-  ButtonSecondary,
-} from "../../components/Button";
-import { t, Trans } from "@lingui/macro";
+import { ButtonSecondary, } from "../../components/Button";
+import { Trans } from "@lingui/macro";
 import { TransactionResponse } from "@ethersproject/abstract-provider"
 
 export default function ChatSend(props: any) {
@@ -19,9 +9,6 @@ export default function ChatSend(props: any) {
 
   const { chatContract, account, chatRoomAddress } = props
   const onClickSend = useCallback(async () => {
-    console.log("click send button");
-    console.log("inputMessage:", inputMessage);
-    console.log("chatContract props:", props);
     if (account && chatContract && chatRoomAddress) {
       chatContract?.send(chatRoomAddress, account, inputMessage, {})
         .then((tx: TransactionResponse) => {
@@ -29,9 +16,10 @@ export default function ChatSend(props: any) {
           setInputMessage("")
         }).catch((e: Error) => {
           console.log(e)
+          
         })
     }
-  }, [inputMessage]);
+  }, [inputMessage, account, chatContract,  chatRoomAddress ]);
 
   return (
     <>

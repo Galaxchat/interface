@@ -1,61 +1,19 @@
-import { t, Trans } from "@lingui/macro";
-import { NetworkAlert } from "components/NetworkAlert/NetworkAlert";
-import useActiveWeb3React from "hooks/useActiveWeb3React";
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  KeyboardEvent,
-  RefObject,
-  useRef,
-  createContext
-} from "react";
-import { ArrowDown, CheckCircle, HelpCircle } from "react-feather";
+import { Trans } from "@lingui/macro";
+import { useCallback, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import styled, { ThemeContext } from "styled-components/macro";
-
-import AddressInputPanel from "../../components/AddressInputPanel";
-import {
-  BaseButton,
-  ButtonConfirmed,
-  ButtonError,
-  ButtonLight,
-  ButtonPrimary,
-  ButtonSecondary,
-} from "../../components/Button";
-import { GreyCard } from "../../components/Card";
+import { ButtonLight } from "../../components/Button";
 import { AutoColumn } from "../../components/Column";
-import CurrencyInputPanel from "../../components/CurrencyInputPanel";
-import CurrencyLogo from "../../components/CurrencyLogo";
-import Loader from "../../components/Loader";
 import { AutoRow } from "../../components/Row";
-import confirmPriceImpactWithoutFee from "../../components/swap/confirmPriceImpactWithoutFee";
-import ConfirmSwapModal from "../../components/swap/ConfirmSwapModal";
-import {
-  ArrowWrapper,
-  SwapCallbackError,
-  Wrapper,
-} from "../../components/swap/styleds";
+import { Wrapper } from "../../components/swap/styleds";
 
-import { SwitchLocaleLink } from "../../components/SwitchLocaleLink";
-import { useExpertModeManager } from "../../state/user/hooks";
-import { LinkStyledButton, ThemedText } from "../../theme";
-import { warningSeverity } from "../../utils/prices";
-import { supportedChainId } from "../../utils/supportedChainId";
 import AppBody from "../AppBody";
-import { SearchInput, Separator } from "../../components/chat/styleds";
 import Logo from "components/Logo";
 import { useChatContract } from '../../hooks/useGalaxChat'
 import ChatSend from "components/chat/ChatSend";
 import ChatContent from "components/chat/ChatContent";
 import ChatSearch from "components/chat/ChatSearch";
+import { Separator } from "../../components/chat/styleds";
 
-const AlertWrapper = styled.div`
-  max-width: 460px;
-  width: 100%;
-`;
 
 export default function Chat({ history }: RouteComponentProps) {
   const [enterQuery, setEnterQuery] = useState<string>("");

@@ -12,7 +12,7 @@ export default function ChatUserInfo(props: any) {
   const icon = useMemo(() => address && jazzicon(32, parseInt(address.slice(2, 10), 16)), [address])
   const iconRef = useRef<HTMLDivElement>(null)
 
-  console.log(address, ENSName, avatar)
+  // console.log(address, ENSName, avatar)
   useLayoutEffect(() => {
     const current = iconRef.current
     if (icon) {

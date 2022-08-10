@@ -1,20 +1,13 @@
 import {
   useCallback,
-  useContext,
-  useEffect,
-  useMemo,
   useState,
   KeyboardEvent,
   RefObject,
-  useRef,
-  createContext
+  useRef
 } from "react";
 import { AutoColumn } from "../../components/Column";
-import { AutoRow } from "../../components/Row";
-import { SearchInput, Separator } from "../../components/chat/styleds";
-import Loader from "../../components/Loader";
-import { t, Trans } from "@lingui/macro";
-import { TransactionResponse } from "@ethersproject/abstract-provider"
+import { SearchInput } from "../../components/chat/styleds";
+import { t } from "@lingui/macro";
 import { isAddress } from '../../utils'
 
 export default function ChatSearch(props: any) {
@@ -41,7 +34,7 @@ export default function ChatSearch(props: any) {
         console.log(`${searchQueryTemp} is not a address`)
       }
     }
-  }, [searchQuery]);
+  }, [searchQuery, changeEnterQuery]);
 
   return (
     <>

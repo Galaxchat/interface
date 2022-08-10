@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import Loader from "../../components/Loader";
-import { t, Trans } from "@lingui/macro";
-import styled, { ThemeContext } from "styled-components/macro";
+import styled from "styled-components/macro";
 import "react-chat-elements/dist/main.css";
 import './style.css';
 import ChatUserInfo from "./ChatUserInfo";
@@ -23,44 +21,34 @@ export default function ChatContent(props: any) {
   // const ENSName = useENSName("0x121B").ENSName
   // console.log("avatar ", avatar)
   // console.log("ENSName ", ENSName)
-  const testData = [
-    {
-      id: 0,
-      address: "0x121Bc38Cd4eB944bD2783da6973e4A3C814c75A0",
-      content: 'hello 0',
-      time: 'Mon 08:17 PM'
-    },
-    {
-      id: 1,
-      address: "0x8b67760994786F7cdD6BE07A716504471D182D50",
-      content: 'hello 1',
-      time: 'Mon 08:17 PM'
-    },
-    {
-      id: 2,
-      address: "0xe37eBE5884017C3dfbB9187E70976280Ea4202e0",
-      content: 'hello 3',
-      time: 'Mon 08:17 PM'
-    }
+  // const testData = [
+  //   {
+  //     id: 0,
+  //     address: "0x121Bc38Cd4eB944bD2783da6973e4A3C814c75A0",
+  //     content: 'hello 0',
+  //     time: 'Mon 08:17 PM'
+  //   },
+  //   {
+  //     id: 1,
+  //     address: "0x8b67760994786F7cdD6BE07A716504471D182D50",
+  //     content: 'hello 1',
+  //     time: 'Mon 08:17 PM'
+  //   },
+  //   {
+  //     id: 2,
+  //     address: "0xe37eBE5884017C3dfbB9187E70976280Ea4202e0",
+  //     content: 'hello 3',
+  //     time: 'Mon 08:17 PM'
+  //   }
 
-  ]
+  // ]
 
   useEffect(() => {
     let contentListTemp = [...contentList]
     if (enterQuery && chatContract && account) {
-      console.log(" ChatContent props:", props)
       // setContentList(testData)
       chatContract.on("Send", (chatroom: any, sender: any, content: any, id: any, block: any, timestamp: any) => {
-        console.log("SendEvent",
-          chatroom,
-          sender,
-          content,
-          id,
-          block,
-          timestamp
-        )
         if (enterQuery === chatroom) {
-          console.log("enterQuery === chatroom")
           contentListTemp.push(
             {
               address: sender,
@@ -68,7 +56,6 @@ export default function ChatContent(props: any) {
               time: 'Mon 08:17 PM'
             }
           )
-          console.log("contentListTemp:", contentListTemp)
           setContentList(contentListTemp)
         }
       })
@@ -78,7 +65,7 @@ export default function ChatContent(props: any) {
     //     console.log("off send event")
     //   })
     // }
-  }, [enterQuery, contentList]);
+  }, [enterQuery, contentList, account ,chatContract]);
 
   console.log("contentList:", contentList)
 
@@ -87,8 +74,8 @@ export default function ChatContent(props: any) {
       {contentList.map((data: any, index: number) => {
         console.log("data:", data)
         return (
-          <>
-            <div className="d-flex align-items-end" key={data + index}>
+          <div key={data + index}>
+            <div className="d-flex align-items-end">
               <ChatUserInfo
                 address={data.address}
                 type='avatar'
@@ -108,7 +95,7 @@ export default function ChatContent(props: any) {
               </div>
             </div>
             <br />
-          </>
+          </div>
         )
       })}
     </ChatRoom>
