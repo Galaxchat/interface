@@ -66,7 +66,7 @@ export default function Chat({ history }: RouteComponentProps) {
                     }}
                   ></Logo>
                   {/* <ListLogo logoURI={logour}></ListLogo> */}
-                  ChatRoomName@{enterQuery}
+                  ChatRoomName: {enterQuery}
                 </AutoRow>
               </AutoColumn>
               <AutoColumn justify="center" style={{ marginRight: "10px" }}>
