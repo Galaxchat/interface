@@ -38,51 +38,16 @@ import {
   SwapCallbackError,
   Wrapper,
 } from "../../components/swap/styleds";
-import ChatHeader from "../../components/chat/ChatHeader";
+
 import { SwitchLocaleLink } from "../../components/SwitchLocaleLink";
-import TokenWarningModal from "../../components/TokenWarningModal";
-import { TOKEN_SHORTHANDS } from "../../constants/tokens";
-import { useAllTokens, useCurrency } from "../../hooks/Tokens";
-import {
-  ApprovalState,
-  useApprovalOptimizedTrade,
-  useApproveCallbackFromTrade,
-} from "../../hooks/useApproveCallback";
-import useENSAddress from "../../hooks/useENSAddress";
-import {
-  useERC20PermitFromTrade,
-  UseERC20PermitState,
-} from "../../hooks/useERC20Permit";
-import useIsArgentWallet from "../../hooks/useIsArgentWallet";
-import { useIsSwapUnsupported } from "../../hooks/useIsSwapUnsupported";
-import { useUSDCValue } from "../../hooks/useUSDCPrice";
-import useWrapCallback, {
-  WrapErrorText,
-  WrapType,
-} from "../../hooks/useWrapCallback";
-import { useWalletModalToggle } from "../../state/application/hooks";
-import { Field } from "../../state/swap/actions";
-import {
-  useDefaultsFromURLSearch,
-  useDerivedSwapInfo,
-  useSwapActionHandlers,
-  useSwapState,
-} from "../../state/swap/hooks";
 import { useExpertModeManager } from "../../state/user/hooks";
 import { LinkStyledButton, ThemedText } from "../../theme";
-import { computeFiatValuePriceImpact } from "../../utils/computeFiatValuePriceImpact";
-import { maxAmountSpend } from "../../utils/maxAmountSpend";
 import { warningSeverity } from "../../utils/prices";
 import { supportedChainId } from "../../utils/supportedChainId";
 import AppBody from "../AppBody";
 import { SearchInput, Separator } from "../../components/chat/styleds";
 import Logo from "components/Logo";
-import ListLogo from "components/ListLogo";
-import { TextInput, ResizingTextArea } from "components/TextInput";
 import { useChatContract } from '../../hooks/useGalaxChat'
-import { Contract, ethers } from "ethers";
-import CHAT_ABI from 'abis/galax-chat-message.json'
-import { TransactionResponse } from "@ethersproject/abstract-provider"
 import ChatSend from "components/chat/ChatSend";
 import ChatContent from "components/chat/ChatContent";
 import ChatSearch from "components/chat/ChatSearch";
@@ -143,7 +108,7 @@ export default function Chat({ history }: RouteComponentProps) {
                     }}
                   ></Logo>
                   {/* <ListLogo logoURI={logour}></ListLogo> */}
-                  <Trans>ChatRoomName</Trans>
+                  <Trans>ChatRoomName@{enterQuery}</Trans>
                 </AutoRow>
               </AutoColumn>
               <AutoColumn justify="center" style={{ marginRight: "10px" }}>

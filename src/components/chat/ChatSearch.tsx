@@ -20,7 +20,7 @@ export default function ChatSearch(props: any) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   // const [enterQuery, setEnterQuery] = useState<string>("");
 
-  const { chatContract, account, changeEnterQuery} = props
+  const { changeEnterQuery} = props
   const inputRef = useRef<HTMLInputElement>();
 
   const handleInput = useCallback((event) => {
@@ -31,7 +31,9 @@ export default function ChatSearch(props: any) {
   
   const handleEnter = useCallback(async (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      changeEnterQuery(searchQuery)
+      const searchQueryTemp = searchQuery
+      setSearchQuery('')
+      changeEnterQuery(searchQueryTemp)
     }
   }, [searchQuery]);
 
