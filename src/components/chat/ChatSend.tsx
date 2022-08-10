@@ -1,43 +1,55 @@
 import { useState, useCallback } from "react";
-import { AutoColumn } from "../../components/Column";
-import { ButtonSecondary, } from "../../components/Button";
+import { AutoRow } from "components/Row";
+import { ButtonSecondary } from "../../components/Button";
 import { Trans } from "@lingui/macro";
-import { TransactionResponse } from "@ethersproject/abstract-provider"
+import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { Separator } from "components/SearchModal/styleds";
 
 export default function ChatSend(props: any) {
   const [inputMessage, setInputMessage] = useState<string>("");
 
-  const { chatContract, account, chatRoomAddress } = props
+  const { chatContract, account, chatRoomAddress } = props;
   const onClickSend = useCallback(async () => {
     if (account && chatContract && chatRoomAddress) {
-      chatContract?.send(chatRoomAddress, account, inputMessage, {})
+      chatContract
+        ?.send(chatRoomAddress, account, inputMessage, {})
         .then((tx: TransactionResponse) => {
-          setInputMessage("")
-        }).catch((e: Error) => {
-          console.log(e)
-
+          setInputMessage("");
         })
+        .catch((e: Error) => {
+          console.log(e);
+        });
     }
-  }, [inputMessage, account, chatContract,  chatRoomAddress ]);
+  }, [inputMessage, account, chatContract, chatRoomAddress]);
 
   return (
     <>
-      <AutoColumn>
-        <input type="text"
+      <AutoRow>
+        {/* <input type="text"
           className="form-control form-control-lg"
           placeholder="input your message"
           value={inputMessage}
           onChange={(event) => {
             setInputMessage(event.target.value)
           }}
-        />
-      </AutoColumn>
-      <AutoColumn style={{ marginLeft: '10px' }}>
+        /> */}
+        <textarea
+          name="message"
+          id="messageInput"
+          value={inputMessage}
+          placeholder="input your message"
+          onChange={(event) => {
+            setInputMessage(event.target.value)
+          }}
+          style={{ border: "0px", height: "100px", width: "100%" }}
+        ></textarea>
+      </AutoRow>
+      <Separator />
+      <AutoRow style={{ marginRight: "20px", width: "64px" }}>
         <ButtonSecondary onClick={onClickSend}>
           <Trans>Send</Trans>
         </ButtonSecondary>
-      </AutoColumn>
+      </AutoRow>
     </>
-  )
+  );
 }
-

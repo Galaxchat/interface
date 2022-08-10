@@ -84,7 +84,7 @@ export default function Chat({ history }: RouteComponentProps) {
               />
             </AutoRow>
             <Separator />
-            <AutoRow justify="center" style={{ paddingBottom: '5px' }}>
+            <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}
                 chatRoomAddress={enterQuery}
