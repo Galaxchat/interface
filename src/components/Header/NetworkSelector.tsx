@@ -260,9 +260,8 @@ const getChainNameFromId = (id: string | number) => {
 
 const NETWORK_SELECTOR_CHAINS = [
   SupportedChainId.MAINNET,
-  SupportedChainId.POLYGON,
-  SupportedChainId.OPTIMISM,
-  SupportedChainId.ARBITRUM_ONE,
+  SupportedChainId.GOERLI,
+  SupportedChainId.RINKEBY,
 ]
 
 export default function NetworkSelector() {
