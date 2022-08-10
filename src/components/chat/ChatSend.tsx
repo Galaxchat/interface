@@ -22,12 +22,14 @@ export default function ChatSend(props: any) {
     console.log("click send button");
     console.log("inputMessage:", inputMessage);
     console.log("chatContract props:", props);
-    if (account && chatContract) {
+    if (account && chatContract && chatRoomAddress) {
       chatContract?.send(chatRoomAddress, account, inputMessage, {})
         .then((tx: TransactionResponse) => {
           console.log(tx)
           setInputMessage("")
-        }).catch((e: Error) => console.log(e))
+        }).catch((e: Error) => {
+          console.log(e)
+        })
     }
   }, [inputMessage]);
 
@@ -45,7 +47,7 @@ export default function ChatSend(props: any) {
       </AutoColumn>
       <AutoColumn style={{ marginLeft: '10px' }}>
         <ButtonSecondary onClick={onClickSend}>
-          <Trans>send</Trans>
+          <Trans>Send</Trans>
         </ButtonSecondary>
       </AutoColumn>
     </>

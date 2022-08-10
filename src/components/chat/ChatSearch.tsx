@@ -15,6 +15,7 @@ import { SearchInput, Separator } from "../../components/chat/styleds";
 import Loader from "../../components/Loader";
 import { t, Trans } from "@lingui/macro";
 import { TransactionResponse } from "@ethersproject/abstract-provider"
+import { isAddress } from '../../utils'
 
 export default function ChatSearch(props: any) {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -33,7 +34,12 @@ export default function ChatSearch(props: any) {
     if (e.key === "Enter") {
       const searchQueryTemp = searchQuery
       setSearchQuery('')
-      changeEnterQuery(searchQueryTemp)
+      const isAddressSearch = isAddress(searchQueryTemp)
+      if (isAddressSearch){
+        changeEnterQuery(searchQueryTemp)
+      } else {
+        console.log(`${searchQueryTemp} is not a address`)
+      }
     }
   }, [searchQuery]);
 

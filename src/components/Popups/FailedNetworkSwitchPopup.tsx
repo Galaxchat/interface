@@ -25,7 +25,7 @@ export default function FailedNetworkSwitchPopup({ chainId }: { chainId: Support
       <AutoColumn gap="8px">
         <ThemedText.Body fontWeight={500}>
           <Trans>
-            Failed to switch networks from the Uniswap Interface. In order to use Uniswap on {chainInfo.label}, you must
+            Failed to switch networks from the GalaxChat Interface. In order to use GalaxChat on {chainInfo.label}, you must
             change the network in your wallet.
           </Trans>
         </ThemedText.Body>
