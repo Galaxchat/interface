@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/macro";
 import { useCallback, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import { ButtonLight } from "../../components/Button";
+import { ButtonSecondary } from "../../components/Button";
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "../../components/Row";
 import { Wrapper } from "../../components/swap/styleds";
@@ -46,9 +46,9 @@ export default function Chat({ history }: RouteComponentProps) {
         <Wrapper
           id="swap-page"
           style={{
-            border: "1px solid #0a0406",
-            padding: "0px",
-            borderRadius: "24px",
+            border: "1px solid rgb(237, 238, 242)",
+            padding: "26px",
+            borderRadius: "16px",
           }}
         >
           <AutoColumn gap={"md"}>
@@ -68,13 +68,13 @@ export default function Chat({ history }: RouteComponentProps) {
                     }}
                   ></Logo>
                   {/* <ListLogo logoURI={logour}></ListLogo> */}
-                  ChatRoomName: {enterQuery}
+                  {enterQuery ? enterQuery.substr(0, 6) + '...' + enterQuery.substr(-4) : "ChatRoomName"}
                 </AutoRow>
               </AutoColumn>
-              <AutoColumn justify="center" style={{ marginRight: "10px" }}>
-                <ButtonLight id="create-lp-button" onClick={onClickCreateLp}>
+              <AutoColumn justify="flex-end" style={{ }}>
+                <ButtonSecondary onClick={onClickCreateLp}>
                   <Trans>createLP</Trans>
-                </ButtonLight>
+                </ButtonSecondary>
               </AutoColumn>
             </AutoRow>
             <Separator />

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { AutoRow } from "components/Row";
-import { ButtonSecondary } from "../../components/Button";
+import { ButtonSecondary, ButtonGray } from "../../components/Button";
 import { Trans } from "@lingui/macro";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { Separator } from "components/SearchModal/styleds";
@@ -10,7 +10,7 @@ export default function ChatSend(props: any) {
 
   const { chatContract, account, chatRoomAddress } = props;
   const onClickSend = useCallback(async () => {
-    if (account && chatContract && chatRoomAddress) {
+    if (account && chatContract && chatRoomAddress && inputMessage != '') {
       chatContract
         ?.send(chatRoomAddress, account, inputMessage, {})
         .then((tx: TransactionResponse) => {
@@ -37,15 +37,15 @@ export default function ChatSend(props: any) {
           name="message"
           id="messageInput"
           value={inputMessage}
-          placeholder="input your message"
+          placeholder=" input your message"
           onChange={(event) => {
             setInputMessage(event.target.value)
           }}
-          style={{ borderLeft: "none", borderRight: "none", height: "100px", width: "100%" }}
+          style={{ height: "100px", width: "100%", border: "1px solid rgb(237, 238, 242)", animation: "0.6s linear 0s 1 normal none running none", borderRadius: "16px" }}
         ></textarea>
       </AutoRow>
       <Separator />
-      <AutoRow style={{ marginRight: "20px", width: "60px", paddingTop:'2px' }}>
+      <AutoRow style={{ width: "60px", paddingTop: '3px' }}>
         <ButtonSecondary onClick={onClickSend}>
           <Trans>Send</Trans>
         </ButtonSecondary>
