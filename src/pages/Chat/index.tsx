@@ -13,13 +13,15 @@ import ChatSend from "components/chat/ChatSend";
 import ChatContent from "components/chat/ChatContent";
 import ChatSearch from "components/chat/ChatSearch";
 import { Separator } from "../../components/chat/styleds";
+import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 
 export default function Chat({ history }: RouteComponentProps) {
   const [enterQuery, setEnterQuery] = useState<string>("");
 
   const chatUniSendContract = useChatContract()
-  const account = chatUniSendContract?.signer.getAddress()
+  const { account } = useActiveWeb3React()
+  // const account = chatUniSendContract?.signer.getAddress()
 
   const changeEnterQuery = (query: string) => {
     console.log("changeEnterQuery:", query)
@@ -83,7 +85,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 enterQuery={enterQuery}
               />
             </AutoRow>
-            <Separator />
+            <Separator style={{ display: 'none' }} />
             <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}

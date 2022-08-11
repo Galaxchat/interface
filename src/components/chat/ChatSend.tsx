@@ -41,11 +41,11 @@ export default function ChatSend(props: any) {
           onChange={(event) => {
             setInputMessage(event.target.value)
           }}
-          style={{ border: "0px", height: "100px", width: "100%" }}
+          style={{ borderLeft: "none", borderRight: "none", height: "100px", width: "100%" }}
         ></textarea>
       </AutoRow>
       <Separator />
-      <AutoRow style={{ marginRight: "20px", width: "64px" }}>
+      <AutoRow style={{ marginRight: "20px", width: "60px", paddingTop:'2px' }}>
         <ButtonSecondary onClick={onClickSend}>
           <Trans>Send</Trans>
         </ButtonSecondary>
