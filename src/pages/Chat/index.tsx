@@ -73,7 +73,7 @@ export default function Chat({ history }: RouteComponentProps) {
               </AutoColumn>
               <AutoColumn justify="flex-end" style={{ }}>
                 <ButtonSecondary onClick={onClickCreateLp}>
-                  <Trans>createLP</Trans>
+                  <Trans>createToken</Trans>
                 </ButtonSecondary>
               </AutoColumn>
             </AutoRow>
@@ -85,7 +85,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 enterQuery={enterQuery}
               />
             </AutoRow>
-            <Separator style={{ display: 'none' }} />
+            <Separator style={{ }} />
             <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}

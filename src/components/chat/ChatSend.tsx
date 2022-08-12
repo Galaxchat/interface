@@ -45,6 +45,7 @@ export default function ChatSend(props: any) {
         ></textarea>
       </AutoRow>
       <Separator />
+        <br />
       <AutoRow style={{ width: "60px", paddingTop: '3px' }}>
         <ButtonSecondary onClick={onClickSend}>
           <Trans>Send</Trans>

@@ -77,7 +77,7 @@ export default function ChatContent(props: any) {
 
   return (
     <ChatRoom>
-      {contentList.length !=0  ? contentList.map((data: any, index: number) => {
+      {contentList.length != 0 ? contentList.map((data: any, index: number) => {
         return (
           <div key={data + index}>
             <div className="d-flex align-items-end">
