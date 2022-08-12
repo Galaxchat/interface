@@ -10,6 +10,8 @@ const ChatRoom = styled.div`
   overflow: auto;
   min-height: 200px
   max-height: 400px;
+  height: 400px;
+  // display: flex;
 `;
 
 
