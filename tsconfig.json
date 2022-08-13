@@ -24,7 +24,8 @@
     "strictNullChecks": true,
     "target": "es5",
     "types": ["react-spring", "jest"],
-    "useUnknownInCatchVariables": false
+    "useUnknownInCatchVariables": false,
+    "suppressImplicitAnyIndexErrors": true,
   },
   "exclude": ["node_modules", "cypress"],
   "include": ["src/**/*"]

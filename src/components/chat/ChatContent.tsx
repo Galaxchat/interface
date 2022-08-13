@@ -82,8 +82,6 @@ export default function ChatContent(props: any) {
             let distinctContenList = []
             let obj = {}
             for (let content of contentListTemp) {
-              console.log("log", content)
-              console.log("obj", obj)
               if (!obj[content.blockHash]) {
                 distinctContenList.push(content)
                 obj[content.blockHash] = 1
@@ -100,7 +98,7 @@ export default function ChatContent(props: any) {
     return () => {
       if (chatContract){
         chatContract.removeAllListeners('Send', () => {
-          console.log("Unsubscribe all listeners ")
+          console.log("Unsubscribe Send listeners ")
         })
       }
     }
