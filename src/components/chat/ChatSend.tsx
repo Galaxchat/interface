@@ -16,7 +16,6 @@ import Loader from "components/Loader";
 
 export default function ChatSend(props: any) {
   const [inputMessage, setInputMessage] = useState<string>("");
-  const [inputSize, setInputSize] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const chatInputRef = useRef<HTMLInputElement>();
@@ -44,7 +43,7 @@ export default function ChatSend(props: any) {
 
   return (
     <>
-      <AutoRow id="chat-input-box">
+      <AutoRow style={{position:"relative"}}>
         {/* <textarea
           name="message"
           id="messageInput"
@@ -55,14 +54,14 @@ export default function ChatSend(props: any) {
           }}
           style={{ height: "100px", width: "100%", border: "1px solid rgb(237, 238, 242)", animation: "0.6s linear 0s 1 normal none running none", borderRadius: "16px" }}
         ></textarea> */}
-        <AutoColumn justify="flex-start">
+        <AutoColumn justify="flex-start" style={{position:"absolute",height:"100%"}}>
           <ChatUserInfo
             address={account}
             type="avatar"
-            style={{ marginRight: "16px" }}
+            style={{ marginRight: "16px", marginLeft: "16px"}}
           />
         </AutoColumn>
-        <AutoColumn>
+        {/* <AutoColumn>
           <div
             dir="auto"
             suppressContentEditableWarning
@@ -133,11 +132,11 @@ export default function ChatSend(props: any) {
               </div>
             </div>
           </div>
-        </AutoColumn>
-        {/* <AutoColumn>
-          <div className="input" contentEditable placeholder="Something New?"></div>
-          <br />
         </AutoColumn> */}
+        <AutoColumn style={{marginLeft:"60px"}}>
+          <div className="input" suppressContentEditableWarning  contentEditable placeholder="Something New?" ref={chatInputRef as RefObject<HTMLInputElement>}>{inputMessage}</div>
+          <br />
+        </AutoColumn>
       </AutoRow>
       <Separator />
       <br />
