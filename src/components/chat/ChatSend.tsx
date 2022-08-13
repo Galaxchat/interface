@@ -1,55 +1,50 @@
-import { useState, useCallback, useEffect, useRef, RefObject } from "react";
+import {
+  useState,
+  useCallback,
+  useRef,
+  RefObject
+} from "react";
 import { AutoRow } from "components/Row";
-import { ButtonSecondary, ButtonGray } from "../../components/Button";
+import { ButtonSecondary } from "../../components/Button";
 import { Trans } from "@lingui/macro";
 import { TransactionResponse } from "@ethersproject/abstract-provider";
 import { Separator } from "components/SearchModal/styleds";
 import { AutoColumn } from "components/Column";
-import ChatUserInfo from 'components/chat/ChatUserInfo'
+import ChatUserInfo from "components/chat/ChatUserInfo";
+import Loader from "components/Loader";
+
 
 export default function ChatSend(props: any) {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [inputSize, setInputSize] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const chatInputRef = useRef<HTMLInputElement>();
   const { chatContract, account, chatRoomAddress } = props;
 
   const onClickSend = useCallback(async () => {
-    const input = chatInputRef.current?.innerText
-    if (input){
-      setInputMessage(input)
+    const input = chatInputRef.current?.innerText;
+    if (input) {
+      setInputMessage(input);
     }
     if (account && chatContract && chatRoomAddress && input != "") {
+      setLoading(true);
       chatContract
         ?.send(chatRoomAddress, account, input, {})
         .then((tx: TransactionResponse) => {
-          setInputMessage("ee");
+          setInputMessage("");
+          setLoading(false);
         })
         .catch((e: Error) => {
+          setLoading(false);
           console.log(e);
         });
     }
   }, [inputMessage, account, chatContract, chatRoomAddress]);
 
-  // function getbBoxSize(id: string) {
-  //   const height = document.getElementById(`id`)?.offsetHeight
-  //   const width = document.getElementById(`id`)?.offsetWidth
-  //   console.log([height, width])
-  //   return [height, width]
-  // }
-
-
   return (
     <>
-      <AutoRow id='chat-input-box'>
-        {/* <input type="text"
-          classNameNameName="form-control form-control-lg"
-          placeholder="input your message"
-          value={inputMessage}
-          onChange={(event) => {
-            setInputMessage(event.target.value)
-          }}
-        /> */}
+      <AutoRow id="chat-input-box">
         {/* <textarea
           name="message"
           id="messageInput"
@@ -63,8 +58,8 @@ export default function ChatSend(props: any) {
         <AutoColumn justify="flex-start">
           <ChatUserInfo
             address={account}
-            type='avatar'
-            style={{ marginRight: '16px' }}
+            type="avatar"
+            style={{ marginRight: "16px" }}
           />
         </AutoColumn>
         <AutoColumn>
@@ -147,9 +142,18 @@ export default function ChatSend(props: any) {
       <Separator />
       <br />
       <AutoRow style={{ width: "60px", paddingTop: "3px" }}>
-        <ButtonSecondary onClick={onClickSend}>
-          <Trans>Send</Trans>
-        </ButtonSecondary>
+        {loading ? (
+          <>
+            <ButtonSecondary style={{pointerEvents: "none"}}>
+              {/* <Trans>Sending</Trans> */}
+              <Loader />
+            </ButtonSecondary>
+          </>
+        ) : (
+          <ButtonSecondary onClick={onClickSend}>
+            <Trans>Send</Trans>
+          </ButtonSecondary>
+        )}
       </AutoRow>
     </>
   );
