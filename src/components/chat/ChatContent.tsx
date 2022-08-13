@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import "react-chat-elements/dist/main.css";
 import './style.css';
@@ -18,9 +18,7 @@ const ChatRoom = styled.div`
 
 export default function ChatContent(props: any) {
   const [contentList, setContentList] = useState<any>([])
-
   const { chatContract, account, enterQuery } = props
-
 
   function getTime(timestamp: any) {
     const d = new Date(parseInt(timestamp.toString() + '000'))
@@ -32,30 +30,6 @@ export default function ChatContent(props: any) {
     let second = d.getSeconds().toString().length < 2 ? "0" + d.getSeconds().toString() : d.getSeconds().toString()
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
   }
-
-  // const dataMemo = useMemo(() => {
-  //   if (enterQuery && chatContract && account) {
-  //     // setContentList(testData)
-  //     const eventFilter = chatContract.filters.Send(enterQuery)
-  //     chatContract.on(eventFilter, (_chatroom:any,_sender: any, _content: any, timestamp: any) => {
-  //       console.log("on eventFilter",_sender,_content)
-  //       contentListTemp.push(
-  //         {
-  //           args:{
-  //             _sender: _sender,
-  //             _content: _content,
-  //             timestamp: timestamp,
-  //           }
-  //         }
-  //       )
-  //       console.log("contentListTemp", contentListTemp)
-  //     })
-  //     return contentListTemp
-  //   } else {
-  //     return contentList
-  //   }
-  // }, [])
-
 
   useEffect(() => {
     if (enterQuery && chatContract && account) {
@@ -96,7 +70,7 @@ export default function ChatContent(props: any) {
 
     }
     return () => {
-      if (chatContract){
+      if (chatContract) {
         chatContract.removeAllListeners('Send', () => {
           console.log("Unsubscribe Send listeners ")
         })
@@ -106,7 +80,7 @@ export default function ChatContent(props: any) {
 
   return (
     <ChatRoom>
-      {contentList.length != 0 ? contentList.map((data: any, index: number) => {
+      {contentList.length !== 0 ? contentList.map((data: any, index: number) => {
         const time = getTime(data.args.timestamp.toString())
         return (
           <div key={data + index}>
@@ -125,7 +99,7 @@ export default function ChatContent(props: any) {
                     <span>on {time} +UTC</span>
 
                   </div>
-                  <span>{data.args._content}</span>
+                  <span style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
                 </div>
               </div>
             </div>
