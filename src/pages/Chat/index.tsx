@@ -44,7 +44,6 @@ export default function Chat({ history }: RouteComponentProps) {
       />
       <AppBody>
         <Wrapper
-          id="swap-page"
           style={{
             border: "1px solid rgb(237, 238, 242)",
             padding: "26px",
@@ -71,7 +70,7 @@ export default function Chat({ history }: RouteComponentProps) {
                   {enterQuery ? enterQuery.substr(0, 6) + '...' + enterQuery.substr(-4) : "ChatRoomName"}
                 </AutoRow>
               </AutoColumn>
-              <AutoColumn justify="flex-end" style={{ }}>
+              <AutoColumn justify="flex-end" style={{}}>
                 <ButtonSecondary onClick={onClickCreateLp}>
                   <Trans>createToken</Trans>
                 </ButtonSecondary>
@@ -85,7 +84,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 enterQuery={enterQuery}
               />
             </AutoRow>
-            <Separator style={{ }} />
+            <Separator style={{}} />
             <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}
