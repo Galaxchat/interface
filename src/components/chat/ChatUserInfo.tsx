@@ -5,7 +5,7 @@ import jazzicon from '@metamask/jazzicon'
 
 
 export default function ChatUserInfo(props: any) {
-  const { address, type } = props
+  const { address, type, style } = props
   const { avatar } = useENSAvatar(address ?? undefined)
   const ENSName = useENSName(address).ENSName
   const icon = useMemo(() => address && jazzicon(32, parseInt(address.slice(2, 10), 16)), [address])
@@ -33,7 +33,7 @@ export default function ChatUserInfo(props: any) {
         {avatar ? (
           <img className="rounded-circle me-2" width="25" src={avatar} alt="Address" />
         ) : (
-          <span ref={iconRef} />
+          <span ref={iconRef} style={style}/>
         )}
       </>
     )

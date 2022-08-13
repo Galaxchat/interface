@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import styled from "styled-components/macro";
 import "react-chat-elements/dist/main.css";
 import './style.css';
 import ChatUserInfo from "./ChatUserInfo";
+import { BigNumber } from 'ethers'
 
 const ChatRoom = styled.div`
   width: 100%;
@@ -20,6 +21,7 @@ export default function ChatContent(props: any) {
 
   const { chatContract, account, enterQuery } = props
 
+
   function getTime(timestamp: any) {
     const d = new Date(parseInt(timestamp.toString() + '000'))
     const year = d.getFullYear().toString()
@@ -31,27 +33,78 @@ export default function ChatContent(props: any) {
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
   }
 
+  // const dataMemo = useMemo(() => {
+  //   if (enterQuery && chatContract && account) {
+  //     // setContentList(testData)
+  //     const eventFilter = chatContract.filters.Send(enterQuery)
+  //     chatContract.on(eventFilter, (_chatroom:any,_sender: any, _content: any, timestamp: any) => {
+  //       console.log("on eventFilter",_sender,_content)
+  //       contentListTemp.push(
+  //         {
+  //           args:{
+  //             _sender: _sender,
+  //             _content: _content,
+  //             timestamp: timestamp,
+  //           }
+  //         }
+  //       )
+  //       console.log("contentListTemp", contentListTemp)
+  //     })
+  //     return contentListTemp
+  //   } else {
+  //     return contentList
+  //   }
+  // }, [])
+
 
   useEffect(() => {
-    let contentListTemp = [...contentList]
     if (enterQuery && chatContract && account) {
-      // setContentList(testData)
       const eventFilter = chatContract.filters.Send(enterQuery)
+
       chatContract.queryFilter(eventFilter)
         .then((dataList: any) => {
-          contentListTemp = [...dataList]
-          setContentList(contentListTemp)
+          // contentListTemp = [...dataList]
+          setContentList(dataList)
+          let contentListTemp = [...dataList]
+          chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, timestamp: BigNumber, blockHash: string) => {
+            contentListTemp.push(
+              {
+                args: {
+                  _sender: _sender,
+                  _content: _content,
+                  timestamp: timestamp,
+                },
+                blockHash: blockHash
+              }
+            )
+
+            // distinct data
+            let distinctContenList = []
+            let obj = {}
+            for (let content of contentListTemp) {
+              console.log("log", content)
+              console.log("obj", obj)
+              if (!obj[content.blockHash]) {
+                distinctContenList.push(content)
+                obj[content.blockHash] = 1
+              }
+            }
+            setContentList(distinctContenList)
+          })
         })
         .catch((e: Error) => {
           console.log(e);
         })
+
     }
-    // return () => {
-    //   chatContract.off("Send",()=>{
-    //     console.log("off send event")
-    //   })
-    // }
-  }, [enterQuery, contentList, account, chatContract]);
+    return () => {
+      if (chatContract){
+        chatContract.removeAllListeners('Send', () => {
+          console.log("Unsubscribe all listeners ")
+        })
+      }
+    }
+  }, [enterQuery, account, chatContract]);
 
   return (
     <ChatRoom>
