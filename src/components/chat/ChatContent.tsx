@@ -40,7 +40,7 @@ export default function ChatContent(props: any) {
           // contentListTemp = [...dataList]
           setContentList(dataList)
           let contentListTemp = [...dataList]
-          chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, timestamp: BigNumber, blockHash: string) => {
+          chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, id: BigNumber,timestamp: BigNumber, blockHash: string) => {
             contentListTemp.push(
               {
                 args: {
