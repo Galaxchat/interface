@@ -1,4 +1,4 @@
-import { useCallback, useState, KeyboardEvent, RefObject, useRef } from "react";
+import { useCallback, useState, RefObject, useRef } from "react";
 import { ButtonSecondary } from "../../components/Button";
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "components/Row";

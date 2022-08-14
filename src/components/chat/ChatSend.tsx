@@ -1,7 +1,6 @@
 import {
   useState,
-  useCallback,
-  useRef
+  useCallback
 } from "react";
 import { AutoRow } from "components/Row";
 import { ButtonSecondary } from "../../components/Button";
@@ -20,7 +19,6 @@ export default function ChatSend(props: any) {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
-  const chatInputRef = useRef<HTMLInputElement>();
   const { chatContract, account, chatRoomAddress } = props;
 
 

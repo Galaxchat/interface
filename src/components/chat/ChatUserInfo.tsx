@@ -1,17 +1,14 @@
-import { useMemo, useRef, useLayoutEffect } from "react";
-import useENSAvatar from 'hooks/useENSAvatar'
-import useENSName from 'hooks/useENSName'
+import { useMemo, useRef, useLayoutEffect, } from "react";
 import jazzicon from '@metamask/jazzicon'
+import { useDefaultENS } from '../../hooks/useGalaxChat'
 
 
 export default function ChatUserInfo(props: any) {
   const { address, type, style } = props
-  const { avatar } = useENSAvatar(address ?? undefined)
-  const ENSName = useENSName(address).ENSName
+  const {ensName, ensAvatar } = useDefaultENS(address)
   const icon = useMemo(() => address && jazzicon(32, parseInt(address.slice(2, 10), 16)), [address])
   const iconRef = useRef<HTMLDivElement>(null)
 
-  // console.log(address, ENSName, avatar)
   useLayoutEffect(() => {
     const current = iconRef.current
     if (icon) {
@@ -30,8 +27,8 @@ export default function ChatUserInfo(props: any) {
   if (type === 'avatar') {
     return (
       <>
-        {avatar ? (
-          <img className="rounded-circle me-2" width="25" src={avatar} alt="Address" />
+        {ensAvatar ? (
+          <img className="rounded-circle me-2" width="25" src={ensAvatar} alt="Address" />
         ) : (
           <span ref={iconRef} style={style}/>
         )}
@@ -40,8 +37,8 @@ export default function ChatUserInfo(props: any) {
   } else if (type === 'name') {
     return (
       <>
-        {ENSName ? (
-          <a className="link-muted" href="#" target="_blank">{ENSName}</a>
+        {ensName ? (
+          <a className="link-muted" href="#" target="_blank">{ensName} </a>
         ) : (
           <a className="link-muted" href="#" target="_blank">{address.substr(0, 6)}...{address.substr(-4)} </a>
         )}
