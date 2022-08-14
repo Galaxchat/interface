@@ -48,15 +48,12 @@ ReactDOM.render(
       <HashRouter>
         <LanguageProvider>
           <Web3Provider>
-            <Blocklist>
               <BlockNumberProvider>
-                <Updaters />
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <App />
                 </ThemeProvider>
               </BlockNumberProvider>
-            </Blocklist>
           </Web3Provider>
         </LanguageProvider>
       </HashRouter>
