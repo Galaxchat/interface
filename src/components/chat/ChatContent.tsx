@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components/macro";
 import "react-chat-elements/dist/main.css";
 import './style.css';
@@ -47,7 +47,7 @@ export default function ChatContent(props: any) {
   const [contentList, setContentList] = useState<any>([])
   const { chatContract, account, enterQuery } = props
 
-  function getTime(timestamp: any) {
+  const getTimeCall = useCallback((timestamp:any)=>{    
     const d = new Date(parseInt(timestamp.toString() + '000'))
     const year = d.getFullYear().toString()
     let month = (d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1).toString() : (d.getMonth() + 1).toString()
@@ -56,7 +56,8 @@ export default function ChatContent(props: any) {
     let minute = d.getMinutes().toString().length < 2 ? "0" + d.getMinutes().toString() : d.getMinutes().toString()
     let second = d.getSeconds().toString().length < 2 ? "0" + d.getSeconds().toString() : d.getSeconds().toString()
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
-  }
+
+  },[])
 
   useEffect(() => {
     if (enterQuery && chatContract && account) {
@@ -108,7 +109,7 @@ export default function ChatContent(props: any) {
   return (
     <ChatRoom>
       {contentList.length !== 0 ? contentList.map((data: any, index: number) => {
-        const time = getTime(data.args.timestamp.toString())
+        const time = getTimeCall(data.args.timestamp.toString())
         return (
           <div key={data + index}>
             <div className="d-flex align-items-end">
