@@ -76,7 +76,7 @@ export default function Chat({ history }: RouteComponentProps) {
                       }}
                     ></Logo>
                   }
-                  Chatroom@{chatRoomInfo && chatRoomInfo.name ? chatRoomInfo.name: ''}
+                  Chatroom{chatRoomInfo && '@'+ chatRoomInfo.name ? chatRoomInfo.name: ''}
                 </AutoRow>
               </AutoColumn>
               <AutoColumn justify="flex-end" style={{}}>
