@@ -19,14 +19,12 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 export default function Chat({ history }: RouteComponentProps) {
   const [enterQuery, setEnterQuery] = useState<string>("");
 
-  const [chatRoomInfo, setChatRoomeInfo] = useState<object>({})
+  const [chatRoomInfo, setChatRoomeInfo] = useState<any>({ name: undefined, imageURL: undefined })
   const chatUniSendContract = useChatContract()
   const { account } = useActiveWeb3React()
-  // const account = chatUniSendContract?.signer.getAddress()
 
-  const changeEnterQuery = (query: string) => {
-    console.log("changeEnterQuery:", query)
-    setEnterQuery(query)
+  const changeRoomInfo = (data: any) => {
+    setChatRoomeInfo(data)
   }
 
   const onClickCreateLp = useCallback(() => {
@@ -41,7 +39,7 @@ export default function Chat({ history }: RouteComponentProps) {
       <ChatSearch
         chatContract={chatUniSendContract}
         account={account}
-        changeEnterQuery={changeEnterQuery}
+        changeRoomInfo={changeRoomInfo}
       />
       <AppBody>
         <Wrapper
@@ -59,16 +57,26 @@ export default function Chat({ history }: RouteComponentProps) {
             <AutoRow justify="space-between" style={{}}>
               <AutoColumn justify="flex-start">
                 <AutoRow>
-                  <Logo
-                    srcs={[logour]}
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      margin: "0px 10px",
-                    }}
-                  ></Logo>
-                  {/* <ListLogo logoURI={logour}></ListLogo> */}
-                  {enterQuery ? enterQuery.substr(0, 6) + '...' + enterQuery.substr(-4) : "ChatRoomName"}
+                  {(chatRoomInfo && chatRoomInfo.imageURL) ?
+                    <Logo
+                      srcs={[chatRoomInfo.imageURL ]}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        margin: "0px 10px",
+                      }}
+                    ></Logo>
+                    :
+                    <Logo
+                      srcs={[logour]}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        margin: "0px 10px",
+                      }}
+                    ></Logo>
+                  }
+                  Chatroom@{chatRoomInfo && chatRoomInfo.name ? chatRoomInfo.name: ''}
                 </AutoRow>
               </AutoColumn>
               <AutoColumn justify="flex-end" style={{}}>

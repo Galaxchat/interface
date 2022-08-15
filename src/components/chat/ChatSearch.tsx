@@ -1,16 +1,19 @@
-import { useCallback, useState, RefObject, useRef } from "react";
+import { useCallback, useState, RefObject, useRef, useEffect } from "react";
 import { ButtonSecondary } from "../../components/Button";
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "components/Row";
 import { SearchInput } from "../../components/chat/styleds";
 import { t, Trans } from "@lingui/macro";
 import { isAddress } from "../../utils";
+import { useChatRoomInfo } from "hooks/useGalaxChat";
 
 export default function ChatSearch(props: any) {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  // const [enterQuery, setEnterQuery] = useState<string>("");
+  const [enterSearch, setEnterSearch] = useState<string>("");
 
-  const { changeEnterQuery } = props;
+  const { changeRoomInfo } = props;
+  const  chatRoomInfo = useChatRoomInfo(enterSearch)
+
   const inputRef = useRef<HTMLInputElement>();
 
   const handleInput = useCallback((event) => {
@@ -23,11 +26,15 @@ export default function ChatSearch(props: any) {
     setSearchQuery("");
     const isAddressSearch = isAddress(searchQueryTemp);
     if (isAddressSearch) {
-      changeEnterQuery(searchQueryTemp);
+      setEnterSearch(isAddressSearch)
     } else {
       console.log(`${searchQueryTemp} is not a address`);
     }
-  }, [searchQuery, changeEnterQuery]);
+  }, [searchQuery, enterSearch]);
+
+  useEffect(()=>{
+    changeRoomInfo(chatRoomInfo)
+  },[enterSearch, chatRoomInfo])
 
   return (
     <>
