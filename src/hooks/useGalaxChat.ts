@@ -1,6 +1,6 @@
 import CHAT_ABI from 'abis/galax-chat-message.json'
 import { GALAX_CHAT_ADDRESSES } from 'constants/addresses'
-import { useContract } from 'hooks/useContract'
+import { useContract,useERC721Contract } from 'hooks/useContract'
 import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
 
@@ -10,6 +10,14 @@ export function useChatContract() {
   return useContract(GALAX_CHAT_ADDRESSES, CHAT_ABI, true)
 }
 
+
+export function useChatRoomInfo(address: string){
+  const contract = useERC721Contract(address);
+  const name =  contract?.name()
+  const tokenURI = contract?.tokenURI(0);
+  console.log( {name: name, tokenURI: tokenURI})
+  return {name: name, tokenURI: tokenURI}
+}
 
 export function useDefaultENS(address: string) {
   const [ensName, setENSName] = useState<string | null>(null);

@@ -19,6 +19,7 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 export default function Chat({ history }: RouteComponentProps) {
   const [enterQuery, setEnterQuery] = useState<string>("");
 
+  const [chatRoomInfo, setChatRoomeInfo] = useState<object>({})
   const chatUniSendContract = useChatContract()
   const { account } = useActiveWeb3React()
   // const account = chatUniSendContract?.signer.getAddress()
