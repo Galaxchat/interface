@@ -43,10 +43,10 @@ export function useChatRoomInfo(address: string) {
           .catch((err)=>{
             console.log(err)
           })
-          setRoomInfo({ name: name, imageURL: imageURL })
+          setRoomInfo({ name: name, imageURL: imageURL, address: address})
         } catch (err){
           // console.log("err",err)
-          setRoomInfo({ name: address, imageURL: null })
+          setRoomInfo({ name: address, imageURL: null, address: address})
         }
       } else {
         console.log("not a address")

@@ -17,8 +17,6 @@ import useActiveWeb3React from "hooks/useActiveWeb3React";
 
 
 export default function Chat({ history }: RouteComponentProps) {
-  const [enterQuery, setEnterQuery] = useState<string>("");
-
   const [chatRoomInfo, setChatRoomeInfo] = useState<any>({ name: undefined, imageURL: undefined })
   const chatUniSendContract = useChatContract()
   const { account } = useActiveWeb3React()
@@ -90,14 +88,14 @@ export default function Chat({ history }: RouteComponentProps) {
               <ChatContent
                 chatContract={chatUniSendContract}
                 account={account}
-                enterQuery={enterQuery}
+                enterQuery={chatRoomInfo? chatRoomInfo.address : undefined}
               />
             </AutoRow>
             <Separator style={{}} />
             <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}
-                chatRoomAddress={enterQuery}
+                chatRoomAddress={chatRoomInfo? chatRoomInfo.address : undefined}
                 account={account}
               />
             </AutoRow>
