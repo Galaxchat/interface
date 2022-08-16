@@ -127,7 +127,7 @@ export default function ChatContent(props: any) {
                     <span>on {time} +UTC</span>
 
                   </div>
-                  <span style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
+                  <span className="text-muted" style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
                 </div>
               </div>
             </div>
