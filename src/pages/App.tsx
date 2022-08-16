@@ -1,6 +1,4 @@
 import Loader from 'components/Loader'
-import TopLevelModals from 'components/TopLevelModals'
-import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { Suspense } from 'react'
 import { useEffect } from 'react'
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
@@ -9,7 +7,6 @@ import { useAnalyticsReporter } from '../components/analytics'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
 import Popups from '../components/Popups'
-import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import Chat from './Chat'
 
 const AppWrapper = styled.div`
@@ -60,15 +57,12 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <Route component={DarkModeQueryParamReader} />
-      <Route component={ApeModeQueryParamReader} />
       <AppWrapper>
         <HeaderWrapper>
           <Header />
         </HeaderWrapper>
         <BodyWrapper>
           <Popups />
-          <TopLevelModals />
           <Suspense fallback={<Loader />}>
             <Switch>
               <Route exact strict path="/" component={Chat} />

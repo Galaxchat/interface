@@ -11,7 +11,7 @@ import { INFURA_NETWORK_URLS } from 'constants/infura'
 import Fortmatic from 'fortmatic'
 import { useMemo } from 'react'
 
-import UNISWAP_LOGO_URL from '../assets/svg/logo.svg'
+// import UNISWAP_LOGO_URL from '../assets/svg/logo.svg'
 
 export enum Wallet {
   INJECTED = 'INJECTED',
@@ -112,8 +112,8 @@ export const [coinbaseWallet, coinbaseWalletHooks] = initializeConnector<Coinbas
       actions,
       options: {
         url: INFURA_NETWORK_URLS[SupportedChainId.MAINNET],
-        appName: 'Uniswap',
-        appLogoUrl: UNISWAP_LOGO_URL,
+        appName: 'GlaxChat',
+        appLogoUrl: '',
       },
       onError,
     })

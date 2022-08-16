@@ -1,10 +1,9 @@
 import useScrollPosition from '@react-hook/window-scroll'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useTheme from 'hooks/useTheme'
-import { useDarkModeManager } from 'state/user/hooks'
+// import useTheme from 'hooks/useTheme'
+// import { useDarkModeManager } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 
-import { ReactComponent as Logo } from '../../assets/svg/logo.svg'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
@@ -110,8 +109,8 @@ const UniIcon = styled.div`
 
 export default function Header() {
   const { account } = useActiveWeb3React()
-  const [darkMode] = useDarkModeManager()
-  const { white, black } = useTheme()
+  // const [darkMode] = useDarkModeManager()
+  // const { white, black } = useTheme()
 
   const scrollY = useScrollPosition()
 
