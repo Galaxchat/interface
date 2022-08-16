@@ -118,16 +118,16 @@ export default function ChatContent(props: any) {
                 type='avatar'
               />
               <div className="d-flex flex-column gap-1" style={{ marginLeft: "6px" }}>
-                <div className="chat-ui-bubble">
+                <div className="chat-ui-bubble content-card">
                   <div className="small text-muted me-2">
                     <ChatUserInfo
                       address={data.args._sender}
                       type='name'
                     />
-                    <span>on {time} +UTC</span>
+                    <span className="content-card-title">on {time} +UTC</span>
 
                   </div>
-                  <span className="text-muted" style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
+                  <span className="content-card-message" style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
                 </div>
               </div>
             </div>

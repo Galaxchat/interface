@@ -41,9 +41,9 @@ export default function ChatUserInfo(props: any) {
     return (
       <>
         {ensName ? (
-          <a className="link-muted" href={adressHref} target="_blank">{ensName} </a>
+          <a className="link-muted content-card-title" href={adressHref} target="_blank">{ensName} </a>
         ) : (
-          <a className="link-muted" href={adressHref}target="_blank">{address.substr(0, 6)}...{address.substr(-4)} </a>
+          <a className="link-muted content-card-title" href={adressHref}target="_blank">{address.substr(0, 6)}...{address.substr(-4)} </a>
         )}
       </>
     )
