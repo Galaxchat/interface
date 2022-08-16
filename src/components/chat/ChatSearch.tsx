@@ -43,7 +43,7 @@ export default function ChatSearch(props: any) {
           <SearchInput
             type="text"
             id="address-search-input"
-            placeholder={t`Search name or paste address`}
+            placeholder={t`Search address`}
             autoComplete="off"
             value={searchQuery}
             ref={inputRef as RefObject<HTMLInputElement>}

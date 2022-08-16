@@ -57,7 +57,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 <AutoRow>
                   {(chatRoomInfo && chatRoomInfo.imageURL) ?
                     <Logo
-                      srcs={[chatRoomInfo.imageURL ]}
+                      srcs={[chatRoomInfo.imageURL]}
                       style={{
                         width: "30px",
                         height: "30px",
@@ -74,7 +74,7 @@ export default function Chat({ history }: RouteComponentProps) {
                       }}
                     ></Logo>
                   }
-                  Chatroom{chatRoomInfo && chatRoomInfo.name ? '@'+ chatRoomInfo.name: ''}
+                  Chatroom{chatRoomInfo && chatRoomInfo.name ? '@' + chatRoomInfo.name : ''}
                 </AutoRow>
               </AutoColumn>
               <AutoColumn justify="flex-end" style={{}}>
@@ -84,18 +84,18 @@ export default function Chat({ history }: RouteComponentProps) {
               </AutoColumn>
             </AutoRow>
             <Separator />
-            <AutoRow justify="center" style={{}}>
+            <AutoRow justify="center" style={{ minHeight: "200px" }}>
               <ChatContent
                 chatContract={chatUniSendContract}
                 account={account}
-                enterQuery={chatRoomInfo? chatRoomInfo.address : undefined}
+                enterQuery={chatRoomInfo ? chatRoomInfo.address : undefined}
               />
             </AutoRow>
             <Separator style={{}} />
             <AutoRow justify="right" style={{ paddingBottom: '5px' }}>
               <ChatSend
                 chatContract={chatUniSendContract}
-                chatRoomAddress={chatRoomInfo? chatRoomInfo.address : undefined}
+                chatRoomAddress={chatRoomInfo ? chatRoomInfo.address : undefined}
                 account={account}
               />
             </AutoRow>

@@ -5,7 +5,6 @@ import { useDarkModeManager } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 
 import { ReactComponent as Logo } from '../../assets/svg/logo.svg'
-import ClaimModal from '../claim/ClaimModal'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
@@ -120,7 +119,7 @@ export default function Header() {
     <HeaderFrame showBackground={scrollY > 45}>
       <Title href=".">
         <UniIcon>
-          <Logo fill={darkMode ? white : black} width="24px" height="100%" title="logo" />
+          {/* <Logo fill={darkMode ? white : black} width="24px" height="100%" title="logo" /> */}
           <HolidayOrnament />
         </UniIcon>
       </Title>

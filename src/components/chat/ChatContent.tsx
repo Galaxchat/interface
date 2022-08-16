@@ -12,7 +12,6 @@ const ChatRoom = styled.div`
   min-height: 200px
   max-height: 400px;
   height: 400px;
-  // display: flex;
 
 ::-webkit-scrollbar-thumb:horizontal { 
     width: 4px;
@@ -107,9 +106,10 @@ export default function ChatContent(props: any) {
   }, [enterQuery, account, chatContract]);
 
   return (
-    <ChatRoom>
+    <ChatRoom id="chatroom">
       {contentList.length !== 0 ? contentList.map((data: any, index: number) => {
         const time = getTimeCall(data.args.timestamp.toString())
+
         return (
           <div key={data + index}>
             <div className="d-flex align-items-end">
@@ -135,8 +135,8 @@ export default function ChatContent(props: any) {
           </div>
         )
       }) :
-        <div style={{ textAlign: "center" }}>
-            <span className="text-muted"> There are nothing.</span>
+        <div style={{ textAlign: "center", marginTop: "180px"}}>
+            <span style={{ color: "#9197a3"}}> There are nothing</span>
         </div>
       }
     </ChatRoom>
