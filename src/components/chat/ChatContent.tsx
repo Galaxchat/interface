@@ -46,7 +46,7 @@ export default function ChatContent(props: any) {
   const [contentList, setContentList] = useState<any>([])
   const { chatContract, account, enterQuery } = props
 
-  const getTimeCall = useCallback((timestamp:any)=>{    
+  const getTimeCall = useCallback((timestamp: any) => {
     const d = new Date(parseInt(timestamp.toString() + '000'))
     const year = d.getFullYear().toString()
     let month = (d.getMonth() + 1).toString().length < 2 ? "0" + (d.getMonth() + 1).toString() : (d.getMonth() + 1).toString()
@@ -56,7 +56,7 @@ export default function ChatContent(props: any) {
     let second = d.getSeconds().toString().length < 2 ? "0" + d.getSeconds().toString() : d.getSeconds().toString()
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`
 
-  },[])
+  }, [])
 
   useEffect(() => {
     if (enterQuery && chatContract && account) {
@@ -67,7 +67,7 @@ export default function ChatContent(props: any) {
           // contentListTemp = [...dataList]
           setContentList(dataList)
           let contentListTemp = [...dataList]
-          chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, id: BigNumber,timestamp: BigNumber, blockHash: string) => {
+          chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, id: BigNumber, timestamp: BigNumber, blockHash: string) => {
             contentListTemp.push(
               {
                 args: {
@@ -127,7 +127,7 @@ export default function ChatContent(props: any) {
                     <span className="content-card-title">on {time} +UTC</span>
 
                   </div>
-                  <span className="content-card-message" style={{ whiteSpace: 'pre-line' }}>{data.args._content}</span>
+                  <span className="content-card-message" style={{ whiteSpace: 'pre-line', color: "#6c757d" }}>{data.args._content}</span>
                 </div>
               </div>
             </div>
@@ -135,8 +135,8 @@ export default function ChatContent(props: any) {
           </div>
         )
       }) :
-        <div style={{ textAlign: "center", marginTop: "180px"}}>
-            <span style={{ color: "#9197a3"}}> There are nothing</span>
+        <div style={{ textAlign: "center", marginTop: "180px" }}>
+          <span style={{ color: "#9197a3" }}> There are nothing</span>
         </div>
       }
     </ChatRoom>
