@@ -25,29 +25,35 @@ export function useChatRoomInfo(address: string) {
   useEffect(() => {
     const resolveRoom = async () => {
       if (isAddressSearch) {
+        const contract = new ethers.Contract(address, ERC721_ABI, provider);
+        let name = address
+        let imageURL = undefined
         try {
           // const provider = ethers.providers.getDefaultProvider("homestead", { infura: INFURA_KEY });
-          const contract = new ethers.Contract(address, ERC721_ABI, provider);
-          const name = await contract?.name()
-          const tokenURI = await contract?.tokenURI(0);
-          const tokenURL = tokenURI.replace("ipfs://", "https://dweb.link/ipfs/")
-          let imageURL =''
-
-          await axios.get(tokenURL)
-          .then((res)=>{
-            console.log(res.data.image.replace("ipfs://", "https://dweb.link/ipfs/"))
-            if (res.data.image && res.data.image.startsWith("ipfs://")){
-              imageURL = res.data.image.replace("ipfs://", "https://dweb.link/ipfs/")
-            }
-          })
-          .catch((err)=>{
-            console.log(err)
-          })
-          setRoomInfo({ name: name, imageURL: imageURL, address: address})
-        } catch (err){
-          // console.log("err",err)
-          setRoomInfo({ name: address, imageURL: null, address: address})
+          name = await contract?.name()
+        } catch (err) {
+          console.log("getname err", err)
         }
+        try {
+          const tokenURI = await contract?.tokenURI(0);
+          if (tokenURI) {
+            const tokenURL = tokenURI.replace("ipfs://", "https://dweb.link/ipfs/")
+
+            await axios.get(tokenURL)
+              .then((res) => {
+                console.log(res.data.image.replace("ipfs://", "https://dweb.link/ipfs/"))
+                if (res.data.image && res.data.image.startsWith("ipfs://")) {
+                  imageURL = res.data.image.replace("ipfs://", "https://dweb.link/ipfs/")
+                }
+              })
+              .catch((err) => {
+                console.log("getimage url err", err)
+              })
+          }
+        } catch (err) {
+          console.log("tokenURI err", err)
+        }
+        setRoomInfo({ name: name, imageURL: imageURL, address: address })
       } else {
         console.log("not a address")
       }
