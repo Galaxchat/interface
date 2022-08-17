@@ -7,15 +7,15 @@ import { BigNumber } from 'ethers'
 
 
 export default function ChatProgress(props: any) {
-  const [currentFund, setCurrentFund] = useState<any>()
-  const [minFund, setMinFund] = useState<any>()
+  const [currentFund, setCurrentFund] = useState<any>(0)
+  const [minFund, setMinFund] = useState<any>(1)
   const { contract, account, chatRoomAddress } = props
 
 
   const changeProgress = useCallback(() => {
     const percentage = (currentFund / minFund * 100).toString()
     const element = document.querySelector(".g-progress") as HTMLElement
-    if (element && percentage){
+    if (element && percentage) {
       // element.style.setProperty("--progress", percentage)
       element.style.setProperty("background", `linear-gradient(90deg, #0f0, #fb7962 ${percentage}%, transparent 0)`)
     }
@@ -40,7 +40,7 @@ export default function ChatProgress(props: any) {
   return (
     <>
       <div className="g-progress">
-        {currentFund} ETH / {minFund} ETH
+        {currentFund + " ETH / " + minFund + " ETH"}
       </div>
     </>
   )
