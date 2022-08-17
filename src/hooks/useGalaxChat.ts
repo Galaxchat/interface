@@ -1,5 +1,6 @@
 import CHAT_ABI from 'abis/galax-chat-message.json'
-import { GALAX_CHAT_ADDRESSES } from 'constants/addresses'
+import LAUNCHPAD_ABI from 'abis/glax-chat-launchpad.json'
+import { GALAX_CHAT_ADDRESSES, GALAX_LAUNCHPAD_ADDRESSES } from 'constants/addresses'
 import { useContract } from 'hooks/useContract'
 import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
@@ -12,11 +13,14 @@ import axios from 'axios'
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
 const provider = ethers.providers.getDefaultProvider("homestead", { infura: INFURA_KEY });
 
-// returns null on errors
+
 export function useChatContract() {
   return useContract(GALAX_CHAT_ADDRESSES, CHAT_ABI, true)
 }
 
+export function useLaunchPadContract() {
+  return useContract(GALAX_LAUNCHPAD_ADDRESSES, LAUNCHPAD_ABI, true)
+}
 
 
 export function useChatRoomInfo(address: string) {

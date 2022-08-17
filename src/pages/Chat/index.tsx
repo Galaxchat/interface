@@ -8,17 +8,19 @@ import { Wrapper } from "../../components/swap/styleds";
 
 import AppBody from "../AppBody";
 import Logo from "components/Logo";
-import { useChatContract } from '../../hooks/useGalaxChat'
+import { useChatContract, useLaunchPadContract } from '../../hooks/useGalaxChat'
 import ChatSend from "components/chat/ChatSend";
 import ChatContent from "components/chat/ChatContent";
 import ChatSearch from "components/chat/ChatSearch";
 import { Separator } from "../../components/chat/styleds";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
+import ChatProgress from "components/chat/ChatpProgress";
 
 
 export default function Chat({ history }: RouteComponentProps) {
   const [chatRoomInfo, setChatRoomeInfo] = useState<any>({ name: undefined, imageURL: undefined })
   const chatUniSendContract = useChatContract()
+  const chatLaunchPadContract = useLaunchPadContract()
   const { account } = useActiveWeb3React()
 
   const changeRoomInfo = (data: any) => {
@@ -49,7 +51,11 @@ export default function Chat({ history }: RouteComponentProps) {
         >
           <AutoColumn gap={"md"}>
             <AutoRow justify="center" style={{}}>
-              progress bar
+              <ChatProgress 
+                contract={chatLaunchPadContract}
+                account={account}
+                chatRoomAddress={chatRoomInfo ? chatRoomInfo.address : undefined}
+              />
             </AutoRow>
             <Separator />
             <AutoRow justify="space-between" style={{}}>
