@@ -26,8 +26,8 @@ export default function ChatProgress(props: any) {
     const getProgress = async () => {
       if (contract && account && chatRoomAddress) {
         const chatroomStatus = await contract.chatroomStatus(chatRoomAddress)
-        // setCurrentFund(parseFloat(chatroomStatus.totalFund.toString()) / 100000000000000000)
-        setCurrentFund(0.21)
+        setCurrentFund(parseFloat(chatroomStatus.totalFund.toString()) / 100000000000000000)
+        // setCurrentFund(0.21)
 
         const getMinFund = await contract.minETHAmount()
         setMinFund(parseFloat(getMinFund.toString()) / 100000000000000000)
