@@ -1,9 +1,8 @@
 import useScrollPosition from '@react-hook/window-scroll'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-// import useTheme from 'hooks/useTheme'
-// import { useDarkModeManager } from 'state/user/hooks'
+import useTheme from 'hooks/useTheme'
 import styled from 'styled-components/macro'
-
+import ChatLogo from '../../assets/images/logo-32x32.png'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
@@ -109,8 +108,6 @@ const UniIcon = styled.div`
 
 export default function Header() {
   const { account } = useActiveWeb3React()
-  // const [darkMode] = useDarkModeManager()
-  // const { white, black } = useTheme()
 
   const scrollY = useScrollPosition()
 
@@ -118,7 +115,7 @@ export default function Header() {
     <HeaderFrame showBackground={scrollY > 45}>
       <Title href=".">
         <UniIcon>
-          {/* <Logo fill={darkMode ? white : black} width="24px" height="100%" title="logo" /> */}
+          <img src={ChatLogo} width="24px" height="24px"/>
           <HolidayOrnament />
         </UniIcon>
       </Title>
