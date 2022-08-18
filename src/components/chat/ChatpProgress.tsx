@@ -27,7 +27,14 @@ export default function ChatProgress(props: any) {
   const { contract, account, chatRoomAddress } = props;
 
   const changeProgress = useCallback(() => {
-    const percentage = ((currentFund / minFund) * 100).toString();
+    let percentage = "0";
+    if (currentFund && minFund && currentFund < minFund) {
+      percentage = ((currentFund / minFund) * 100).toString();
+    } else if (!minFund || !currentFund) {
+      percentage = "0";
+    } else {
+      percentage = "100";
+    }
     const element = document.querySelector(".g-progress") as HTMLElement;
     if (element && percentage) {
       // element.style.setProperty("--progress", percentage)
@@ -59,7 +66,7 @@ export default function ChatProgress(props: any) {
           from: account,
           value: (value * 10 ** 18).toString(),
         });
-        setValue("")
+        setValue("");
         invest.wait().then(() => {
           getProgress();
           setLoading(false);
@@ -80,7 +87,11 @@ export default function ChatProgress(props: any) {
     setValue("");
     setIsOpen(false);
   };
-
+  const handleClickInvest = () => {
+    if (account && contract && chatRoomAddress) {
+      setIsOpen(true);
+    }
+  };
   const onUserInput = useCallback((typedValue: string) => {
     setValue(typedValue);
   }, []);
@@ -92,40 +103,48 @@ export default function ChatProgress(props: any) {
 
   return (
     <>
-      <AutoRow>
-        <div className="g-progress">
-          {currentFund + " ETH / " + minFund + " ETH"}
-        </div>
-      </AutoRow>
       <AutoRow justify="center">
-        <AutoColumn>
-          <span>Chatroom token are being created</span>
+        <span className="progress-hint">Chatroom token are being created</span>
+      </AutoRow>
+      <AutoRow justify="space-between">
+        <AutoColumn style={{ width: "90%"}}>
+          <div className="g-progress">
+            {minFund
+              ? currentFund + " ETH / " + minFund + " ETH"
+              : "please connect wallet"}
+          </div>
         </AutoColumn>
         <AutoColumn>
-          {loading ? (
-            <ButtonSecondary
-              style={{
-                pointerEvents: "none",
-                marginLeft: "10px",
-                marginTop: "6px",
-                width: "81px",
-                height: "41px",
-              }}
-            >
-              <Loader />
-            </ButtonSecondary>
-          ) : (
-            <ButtonSecondary
-              onClick={() => {
-                setIsOpen(true);
-              }}
-              style={{ marginLeft: "10px", marginTop: "6px" }}
-            >
-              <Trans>Invest</Trans>
-            </ButtonSecondary>
-          )}
+          {loading ? 
+          <Loader />
+          :
+          <svg
+            viewBox="64 64 896 896"
+            focusable="false"
+            data-icon="plus-circle"
+            width="25px"
+            height="25px"
+            fill="currentColor"
+            aria-hidden="true"
+            onClick={handleClickInvest}
+          > 
+            <path
+              d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+              fill="#1890ff"
+            ></path>
+            <path
+              d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372zm192 396c0 4.4-3.6 8-8 8H544v152c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V544H328c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h152V328c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v152h152c4.4 0 8 3.6 8 8v48z"
+              fill="#e6f7ff"
+            ></path>
+            <path
+              d="M696 480H544V328c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v152H328c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h152v152c0 4.4 3.6 8 8 8h48c4.4 0 8-3.6 8-8V544h152c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"
+              fill="#1890ff"
+            ></path>
+          </svg>
+          }
         </AutoColumn>
       </AutoRow>
+
       <Modal
         isOpen={isOpen}
         onDismiss={toggleModal}
