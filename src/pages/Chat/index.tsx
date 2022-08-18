@@ -85,7 +85,7 @@ export default function Chat({ history }: RouteComponentProps) {
               </AutoColumn>
               <AutoColumn justify="flex-end" style={{}}>
                 <ButtonSecondary onClick={onClickCreateLp}>
-                  <Trans>createToken</Trans>
+                  <Trans>CreateToken</Trans>
                 </ButtonSecondary>
               </AutoColumn>
             </AutoRow>
