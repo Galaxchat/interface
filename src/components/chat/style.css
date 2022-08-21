@@ -15966,9 +15966,8 @@ emoji-picker {
 .g-progress {
     width: 100%;
     height: 25px;
-    /* border-radius: 25px;
-    border: 1px solid #eee;
-    border-color: #ced4da; */
+    border-radius: 25px;
+    border: 1px dotted #ced4da;
     text-align: center;
     color: #ced4da;
 }
