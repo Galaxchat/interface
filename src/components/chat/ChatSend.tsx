@@ -60,7 +60,6 @@ export default function ChatSend(props: any) {
         {loading ? (
           <>
             <ButtonSecondary style={{ pointerEvents: "none" }}>
-              {/* <Trans>Sending</Trans> */}
               <Loader />
             </ButtonSecondary>
           </>
