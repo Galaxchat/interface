@@ -30,10 +30,9 @@ export default function ChatProgress(props: any) {
     }
     const element = document.querySelector(".g-progress") as HTMLElement;
     if (element && percentage) {
-      // element.style.setProperty("--progress", percentage)
       element.style.setProperty(
         "background",
-        `linear-gradient(90deg, #0f0, #fb7962 ${percentage}%, transparent 0)`
+        `linear-gradient(90deg, rgb(0 29 255), rgb(251 98 98) ${percentage}%, transparent 0px)`
       );
     }
   }, [currentFund, minFund]);
