@@ -5,18 +5,9 @@ import { ButtonSecondary } from "../../components/Button";
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "components/Row";
 import Loader from "components/Loader";
-import styled from "styled-components/macro";
-import Modal from "components/Modal";
-import { X } from "react-feather";
 import { Input as NumericalInput } from "../NumericalInput";
 import ethLogo from "assets/images/ethereum-logo.png";
-
-const CloseIcon = styled(X)<{ onClick: () => void }>`
-  cursor: pointer;
-`;
-const StyledNumericalInput = styled(NumericalInput)<{}>`
-  text-align: left;
-`;
+import ChatModal from "./ChatModal";
 
 export default function ChatProgress(props: any) {
   const [currentFund, setCurrentFund] = useState<any>(0);
@@ -24,6 +15,7 @@ export default function ChatProgress(props: any) {
   const [value, setValue] = useState<any>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<string>("");
   const { contract, account, chatRoomAddress } = props;
 
   const changeProgress = useCallback(() => {
@@ -83,15 +75,24 @@ export default function ChatProgress(props: any) {
     changeProgress();
   }, [contract, account, chatRoomAddress, currentFund, minFund]);
 
-  const toggleModal = () => {
-    setValue("");
-    setIsOpen(false);
-  };
   const handleClickInvest = () => {
     if (account && contract && chatRoomAddress) {
+      setModalType("invest")
+      setIsOpen(true);
+    } else if (!account) {
+      console.log("notConnect")
+      setModalType("notConnect")
+      setIsOpen(true);
+    } else if (!chatRoomAddress) {
+      console.log("notSearch")
+      setModalType("notSearch")
       setIsOpen(true);
     }
   };
+  const showModal = (open: boolean) => {
+    setIsOpen(open);
+  };
+
   const onUserInput = useCallback((typedValue: string) => {
     setValue(typedValue);
   }, []);
@@ -115,73 +116,42 @@ export default function ChatProgress(props: any) {
           </div>
         </AutoColumn>
         <AutoColumn>
-          {loading ?
+          {loading ? (
             <ButtonSecondary style={{ pointerEvents: "none" }}>
               <Loader />
             </ButtonSecondary>
-            :
-            <ButtonSecondary
-              onClick={handleClickInvest}
-            >
+          ) : (
+            <ButtonSecondary onClick={handleClickInvest}>
               <Trans>+</Trans>
             </ButtonSecondary>
-          }
+          )}
         </AutoColumn>
       </AutoRow>
 
-      <Modal
-        isOpen={isOpen}
-        onDismiss={toggleModal}
-        maxHeight={35}
-        minHeight={35}
-      >
-        <CloseIcon
-          onClick={toggleModal}
-          style={{ zIndex: 99, position: "relative", left: "90%" }}
-          color="black"
+      {modalType==="invest" ?
+        <ChatModal
+          showModal={showModal}
+          onClickOk={onClickInvestOk}
+          isOpen={isOpen}
+          InfoHtml={
+            <AutoRow justify="space-between">
+              <NumericalInput
+                style={{
+                  borderRadius: "20px",
+                  height: "64px",
+                  textAlign: "left",
+                  marginRight: "5px",
+                }}
+                onUserInput={onUserInput}
+                value={value}
+              />
+              <img src={ethLogo} width="32px" height="32px" />
+              <span style={{ fontSize: "18px", fontWeight: 500 }}>ETH</span>
+            </AutoRow>
+          }
         />
-        <AutoRow>
-          <div>
-            <StyledNumericalInput
-              className="token-amount-input"
-              value={value}
-              onUserInput={onUserInput}
-            />
-            <NumericalInput
-              style={{
-                borderRadius: "20px",
-                height: "70px",
-                width: "300px",
-                marginTop: "20px",
-                textAlign: "left",
-                marginRight: "2px",
-              }}
-              onUserInput={onUserInput}
-              value={value}
-            />
-            <img src={ethLogo} width="32px" height="32px" />
-            <span
-              style={{ fontSize: "18px", fontWeight: 500, marginLeft: "1px" }}
-            >
-              ETH
-            </span>
-          </div>
-          <div style={{ display: "flex", paddingLeft: "20%" }}>
-            <ButtonSecondary
-              onClick={onClickInvestOk}
-              style={{ height: "30px", width: "100px", marginRight: "20px" }}
-            >
-              OK
-            </ButtonSecondary>
-            <ButtonSecondary
-              onClick={toggleModal}
-              style={{ height: "30px", width: "100px" }}
-            >
-              Cancel
-            </ButtonSecondary>
-          </div>
-        </AutoRow>
-      </Modal>
+        : null
+      }
     </>
   );
 }
