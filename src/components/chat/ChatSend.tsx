@@ -12,10 +12,14 @@ import ChatUserInfo from "components/chat/ChatUserInfo";
 import Loader from "components/Loader";
 import { Editor, EditorState } from "draft-js";
 import 'draft-js/dist/Draft.css';
+import ChatModalType from "./ChatModalType";
 
 
 export default function ChatSend(props: any) {
   const [loading, setLoading] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
@@ -36,6 +40,12 @@ export default function ChatSend(props: any) {
           setLoading(false);
           console.log(e);
         });
+    } else if (!account) {
+      setModalType("notConnect")
+      setIsOpen(true);
+    } else if (!chatRoomAddress) {
+      setModalType("notSearch")
+      setIsOpen(true);
     }
   }, [editorState, account, chatContract, chatRoomAddress]);
 
@@ -49,7 +59,7 @@ export default function ChatSend(props: any) {
             style={{ marginRight: "16px", marginLeft: "16px" }}
           />
         </AutoColumn>
-        
+
         <AutoColumn style={{ marginLeft: "60px", width: "100%", minHeight: "60px" }}>
           <Editor editorState={editorState} onChange={setEditorState} placeholder='something new' />
         </AutoColumn>
@@ -69,6 +79,14 @@ export default function ChatSend(props: any) {
           </ButtonSecondary>
         )}
       </AutoRow>
+      {modalType ?
+        <ChatModalType
+          showModal={(open:boolean) =>{ setIsOpen(open)}}
+          type={modalType}
+          isOpen={isOpen}
+        />
+        : null
+      }
     </>
   );
 }

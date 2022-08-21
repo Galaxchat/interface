@@ -8,6 +8,7 @@ import Loader from "components/Loader";
 import { Input as NumericalInput } from "../NumericalInput";
 import ethLogo from "assets/images/ethereum-logo.png";
 import ChatModal from "./ChatModal";
+import ChatModalType from "./ChatModalType";
 
 export default function ChatProgress(props: any) {
   const [currentFund, setCurrentFund] = useState<any>(0);
@@ -80,11 +81,9 @@ export default function ChatProgress(props: any) {
       setModalType("invest")
       setIsOpen(true);
     } else if (!account) {
-      console.log("notConnect")
       setModalType("notConnect")
       setIsOpen(true);
     } else if (!chatRoomAddress) {
-      console.log("notSearch")
       setModalType("notSearch")
       setIsOpen(true);
     }
@@ -128,8 +127,9 @@ export default function ChatProgress(props: any) {
         </AutoColumn>
       </AutoRow>
 
-      {modalType==="invest" ?
+      {modalType === "invest" ?
         <ChatModal
+          title="Invest"
           showModal={showModal}
           onClickOk={onClickInvestOk}
           isOpen={isOpen}
@@ -150,7 +150,11 @@ export default function ChatProgress(props: any) {
             </AutoRow>
           }
         />
-        : null
+        : <ChatModalType
+          showModal={showModal}
+          type={modalType}
+          isOpen={isOpen}
+        />
       }
     </>
   );

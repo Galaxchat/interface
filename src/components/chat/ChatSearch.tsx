@@ -6,13 +6,16 @@ import { SearchInput } from "../../components/chat/styleds";
 import { t, Trans } from "@lingui/macro";
 import { isAddress } from "../../utils";
 import { useChatRoomInfo } from "hooks/useGalaxChat";
+import ChatModalType from "./ChatModalType";
 
 export default function ChatSearch(props: any) {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [enterSearch, setEnterSearch] = useState<string>("");
+  const [modalType, setModalType] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { changeRoomInfo } = props;
-  const  chatRoomInfo = useChatRoomInfo(enterSearch)
+  const chatRoomInfo = useChatRoomInfo(enterSearch)
 
   const inputRef = useRef<HTMLInputElement>();
 
@@ -29,12 +32,19 @@ export default function ChatSearch(props: any) {
       setEnterSearch(isAddressSearch)
     } else {
       console.log(`${searchQueryTemp} is not a address`);
+      setModalType("notSearch");
+      setIsOpen(true)
     }
   }, [searchQuery, enterSearch]);
 
-  useEffect(()=>{
+  const showModal = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+
+  useEffect(() => {
     changeRoomInfo(chatRoomInfo)
-  },[enterSearch, chatRoomInfo])
+  }, [enterSearch, chatRoomInfo])
 
   return (
     <>
@@ -48,7 +58,7 @@ export default function ChatSearch(props: any) {
             value={searchQuery}
             ref={inputRef as RefObject<HTMLInputElement>}
             onChange={handleInput}
-            style={{ padding:"10px" }}
+            style={{ padding: "10px" }}
           />
         </AutoColumn>
         <AutoColumn>
@@ -57,6 +67,14 @@ export default function ChatSearch(props: any) {
           </ButtonSecondary>
         </AutoColumn>
       </AutoRow>
+      {modalType ?
+        <ChatModalType
+          showModal={showModal}
+          type={modalType}
+          isOpen={isOpen}
+        />
+        : null
+      }
     </>
   );
 }

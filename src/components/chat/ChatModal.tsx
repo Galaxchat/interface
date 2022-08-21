@@ -94,13 +94,15 @@ interface ChatModalProps {
   isOpen: boolean;
   InfoHtml: any;
   showModal: any;
+  title: string;
 }
 
 export default function ChatModal({
   onClickOk,
   showModal,
   isOpen,
-  InfoHtml
+  InfoHtml,
+  title
 }: ChatModalProps) {
 
 
@@ -117,7 +119,7 @@ export default function ChatModal({
             <CloseColor />
           </CloseIcon>
           <HeaderRow>
-            <Trans>Invest</Trans>
+            <Trans>{title}</Trans>
           </HeaderRow>
           <ContentSection>
             <Content>
