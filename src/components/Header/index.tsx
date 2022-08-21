@@ -6,6 +6,7 @@ import ChatLogo from '../../assets/images/logo-32x32.png'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
+import ChatMenu from 'components/chat/ChatMenu'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
@@ -130,7 +131,7 @@ export default function Header() {
           </AccountElement>
         </HeaderElement>
         <HeaderElement>
-          {/* <Menu /> */}
+          <ChatMenu />
         </HeaderElement>
       </HeaderControls>
     </HeaderFrame>
