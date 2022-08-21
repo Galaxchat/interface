@@ -15969,7 +15969,7 @@ emoji-picker {
     border-radius: 25px;
     border: 1px solid #eee;
     text-align: center;
-    border-color: #ced4da;
+    /* border-color: #ced4da; */
     color: #ced4da;
 }
 
