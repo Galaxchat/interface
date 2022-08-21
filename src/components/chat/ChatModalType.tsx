@@ -83,7 +83,7 @@ export default function ChatModalType(props: any) {
           onClickOk={showModal}
           isOpen={isOpen}
           InfoHtml={
-            <AutoRow justify="flex-start">
+            <AutoRow justify="center">
               <span style={{ fontSize: "18px", fontWeight: 500, overflow: "auto" }}> {info}</span>
             </AutoRow>
           }

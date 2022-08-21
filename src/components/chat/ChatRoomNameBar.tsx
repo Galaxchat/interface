@@ -32,7 +32,7 @@ export default function ChatRoomNameBar(props: any) {
           setModalType("transactionError");
           const reg = /Error: (.*) \[/;
           const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) :""
-          const text = regResult? regResult[1].trim() : "";
+          const text = regResult? regResult[1].trim() : "It seems something wrong";
           setInfo(text)
           setIsOpen(true);
         }
