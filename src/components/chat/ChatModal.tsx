@@ -119,7 +119,7 @@ export default function ChatModal({
             <CloseColor />
           </CloseIcon>
           <HeaderRow>
-            <Trans>{title}</Trans>
+            {title}
           </HeaderRow>
           <ContentSection>
             <Content>
