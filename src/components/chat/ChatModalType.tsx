@@ -4,7 +4,6 @@ import { AutoRow } from "components/Row";
 
 export default function ChatModalType(props: any) {
   const { type, showModal, isOpen, info } = props
-  console.log()
   return (
     <>
       {type === "notConnect" ?
@@ -72,6 +71,20 @@ export default function ChatModalType(props: any) {
           InfoHtml={
             <AutoRow justify="center">
               <span style={{ fontSize: "18px", fontWeight: 500 }}> Your message is empty </span>
+            </AutoRow>
+          }
+        />
+        : null
+      }
+      {type === "transactionError" ?
+        <ChatModal
+          title="TransactionError"
+          showModal={showModal}
+          onClickOk={showModal}
+          isOpen={isOpen}
+          InfoHtml={
+            <AutoRow justify="flex-start">
+              <span style={{ fontSize: "18px", fontWeight: 500, overflow: "auto" }}> {info}</span>
             </AutoRow>
           }
         />

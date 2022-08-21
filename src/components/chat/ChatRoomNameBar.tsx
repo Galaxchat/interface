@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Loader from "components/Loader";
 import { t, Trans } from "@lingui/macro";
 import { ButtonSecondary } from "../Button";
@@ -12,7 +12,9 @@ export default function ChatRoomNameBar(props: any) {
   const [loading, setLoading] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { contract, account, chatRoomInfo, percentage } = props;
+  const [info, setInfo] = useState<string>("");
+  const { contract, account, chatRoomInfo, percentage, changeRoomInfo } = props;
+
 
   const onClickCreateToken = useCallback(async () => {
     const token = chatRoomInfo?.token
@@ -22,12 +24,17 @@ export default function ChatRoomNameBar(props: any) {
         setLoading(true)
         try {
         const createToken = await contract.createToken(chatRoomAddress)
-        createToken.wait().then(() => {
+        createToken.wait().then(async () => {
           setLoading(false);
         });
         } catch (e) {
-          console.log("err", e);
           setLoading(false);
+          setModalType("transactionError");
+          const reg = /Error: (.*) \[/;
+          const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) :""
+          const text = regResult? regResult[1].trim() : "";
+          setInfo(text)
+          setIsOpen(true);
         }
       } else {
         setModalType("noFullProgress")
@@ -89,6 +96,7 @@ export default function ChatRoomNameBar(props: any) {
           showModal={(open:boolean) =>{ setIsOpen(open)}}
           type={modalType}
           isOpen={isOpen}
+          info={info}
         />
         : null
       }

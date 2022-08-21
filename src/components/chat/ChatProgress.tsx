@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState,useRef } from "react";
 import "react-chat-elements/dist/main.css";
 import { t, Trans } from "@lingui/macro";
 import { ButtonSecondary } from "../Button";
@@ -17,9 +17,15 @@ export default function ChatProgress(props: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
+  const [info, setInfo] = useState<string>("");
   const { contract, account, chatRoomInfo, changePercentage, changeRoomInfo } = props;
 
-  const chatRoomAddress = chatRoomInfo?.address
+
+  useEffect(() => {
+    getProgress();
+    changeProgress();
+  }, [contract, account, chatRoomInfo, currentFund, minFund]);
+
   const changeProgress = useCallback(() => {
     let percentage = "0";
     if (currentFund && minFund && currentFund < minFund) {
@@ -39,28 +45,28 @@ export default function ChatProgress(props: any) {
     }
   }, [currentFund, minFund]);
 
-  const getProgress = async () => {
+  const getProgress = useCallback(async () => {
     if (contract) {
       const getMinFund = await contract.minETHAmount();
       setMinFund(parseFloat(getMinFund.toString()) / 10 ** 18);
     }
-    if (contract && account && chatRoomAddress) {
-      const chatroomStatus = await contract.chatroomStatus(chatRoomAddress);
-      if (chatroomStatus.token != "0x0000000000000000000000000000000000000000"){
-        const tempROOMinfo = { ...chatRoomInfo, token: chatroomStatus.token}
-        changeRoomInfo(tempROOMinfo)
-      }
+    if (contract && account && chatRoomInfo?.address) {
+      const chatroomStatus = await contract.chatroomStatus(chatRoomInfo?.address);
+      // if (chatroomStatus.token != "0x0000000000000000000000000000000000000000") {
+      //   const tempROOMinfo = { ...chatRoomInfo, token: chatroomStatus.token }
+      //   changeRoomInfo(tempROOMinfo)
+      // }
       setCurrentFund(
         parseFloat(chatroomStatus.totalFund.toString()) / 10 ** 18
       );
     }
-  };
+  }, [contract , chatRoomInfo, account]) 
 
   const trigerInvest = async () => {
-    if (contract && chatRoomAddress && value) {
+    if (contract && chatRoomInfo?.address && value) {
       setLoading(true);
       try {
-        const invest = await contract.invest(chatRoomAddress, {
+        const invest = await contract.invest(chatRoomInfo?.address, {
           from: account,
           value: (value * 10 ** 18).toString(),
         });
@@ -70,25 +76,25 @@ export default function ChatProgress(props: any) {
           setLoading(false);
         });
       } catch (e) {
-        console.log("err", e);
         setLoading(false);
+        setModalType("transactionError");
+        const reg = /Error: (.*) \[/;
+        const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) :""
+        const text = regResult? regResult[1].trim() : "";
+        setInfo(text)
+        setIsOpen(true);
       }
     }
   };
 
-  useEffect(() => {
-    getProgress();
-    changeProgress();
-  }, [contract, account, chatRoomAddress, currentFund, minFund]);
-
   const handleClickInvest = () => {
-    if (account && contract && chatRoomAddress) {
+    if (account && contract && chatRoomInfo?.address) {
       setModalType("invest")
       setIsOpen(true);
     } else if (!account) {
       setModalType("notConnect")
       setIsOpen(true);
-    } else if (!chatRoomAddress) {
+    } else if (!chatRoomInfo?.address) {
       setModalType("notSearch")
       setIsOpen(true);
     }
@@ -104,7 +110,7 @@ export default function ChatProgress(props: any) {
   const onClickInvestOk = useCallback(() => {
     setIsOpen(false);
     trigerInvest();
-  }, [contract, chatRoomAddress, value]);
+  }, [contract, chatRoomInfo, value]);
 
   return (
     <>
@@ -159,6 +165,7 @@ export default function ChatProgress(props: any) {
           showModal={showModal}
           type={modalType}
           isOpen={isOpen}
+          info={info}
         />
       }
     </>

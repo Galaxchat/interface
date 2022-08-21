@@ -62,6 +62,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 account={account}
                 chatRoomInfo={chatRoomInfo ? chatRoomInfo : undefined}
                 percentage={percentage}
+                changeRoomInfo={changeRoomInfo}
               />
             </AutoRow>
             <Separator />
