@@ -36,7 +36,7 @@ export function useChatRoomInfo(address: string) {
           // const provider = ethers.providers.getDefaultProvider("homestead", { infura: INFURA_KEY });
           name = await contract?.name()
         } catch (err) {
-          console.log("getname err", err)
+          // console.log("getname err", err)
         }
         try {
           const tokenURI = await contract?.tokenURI(0);
@@ -45,17 +45,16 @@ export function useChatRoomInfo(address: string) {
 
             await axios.get(tokenURL)
               .then((res) => {
-                console.log(res.data.image.replace("ipfs://", "https://dweb.link/ipfs/"))
                 if (res.data.image && res.data.image.startsWith("ipfs://")) {
                   imageURL = res.data.image.replace("ipfs://", "https://dweb.link/ipfs/")
                 }
               })
               .catch((err) => {
-                console.log("getimage url err", err)
+                // console.log("getimage url err", err)
               })
           }
         } catch (err) {
-          console.log("tokenURI err", err)
+          // console.log("tokenURI err", err)
         }
         setRoomInfo({ name: name, imageURL: imageURL, address: address })
       } else {

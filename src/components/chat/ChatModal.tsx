@@ -125,7 +125,7 @@ export default function ChatModal({
             <Content>
               <InfoCard>
                 {InfoHtml}
-                <AutoRow justify="center">
+                <AutoRow justify="center" style={{marginTop: "10px"}}>
                   <ButtonSecondary
                     onClick={() => { onClickOk() }}
                     style={{

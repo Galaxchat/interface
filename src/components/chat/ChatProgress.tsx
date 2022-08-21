@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "react-chat-elements/dist/main.css";
 import { t, Trans } from "@lingui/macro";
-import { ButtonSecondary } from "../../components/Button";
-import { AutoColumn } from "../../components/Column";
+import { ButtonSecondary } from "../Button";
+import { AutoColumn } from "../Column";
 import { AutoRow } from "components/Row";
 import Loader from "components/Loader";
 import { Input as NumericalInput } from "../NumericalInput";
@@ -17,8 +17,9 @@ export default function ChatProgress(props: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
-  const { contract, account, chatRoomAddress } = props;
+  const { contract, account, chatRoomInfo, changePercentage, changeRoomInfo } = props;
 
+  const chatRoomAddress = chatRoomInfo?.address
   const changeProgress = useCallback(() => {
     let percentage = "0";
     if (currentFund && minFund && currentFund < minFund) {
@@ -28,6 +29,7 @@ export default function ChatProgress(props: any) {
     } else {
       percentage = "100";
     }
+    changePercentage(parseFloat(percentage));
     const element = document.querySelector(".g-progress") as HTMLElement;
     if (element && percentage) {
       element.style.setProperty(
@@ -44,6 +46,10 @@ export default function ChatProgress(props: any) {
     }
     if (contract && account && chatRoomAddress) {
       const chatroomStatus = await contract.chatroomStatus(chatRoomAddress);
+      if (chatroomStatus.token != "0x0000000000000000000000000000000000000000"){
+        const tempROOMinfo = { ...chatRoomInfo, token: chatroomStatus.token}
+        changeRoomInfo(tempROOMinfo)
+      }
       setCurrentFund(
         parseFloat(chatroomStatus.totalFund.toString()) / 10 ** 18
       );

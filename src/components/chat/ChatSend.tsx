@@ -46,6 +46,9 @@ export default function ChatSend(props: any) {
     } else if (!chatRoomAddress) {
       setModalType("notSearch")
       setIsOpen(true);
+    }else if (input === "") {
+      setModalType("notContent")
+      setIsOpen(true);
     }
   }, [editorState, account, chatContract, chatRoomAddress]);
 

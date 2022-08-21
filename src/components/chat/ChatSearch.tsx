@@ -14,7 +14,7 @@ export default function ChatSearch(props: any) {
   const [modalType, setModalType] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { changeRoomInfo } = props;
+  const { changeRoomInfo, account } = props;
   const chatRoomInfo = useChatRoomInfo(enterSearch)
 
   const inputRef = useRef<HTMLInputElement>();
@@ -28,14 +28,17 @@ export default function ChatSearch(props: any) {
     const searchQueryTemp = searchQuery;
     setSearchQuery("");
     const isAddressSearch = isAddress(searchQueryTemp);
-    if (isAddressSearch) {
+    if (isAddressSearch && account) {
       setEnterSearch(isAddressSearch)
+    } else if (!account ) {
+      setModalType("notConnect")
+      setIsOpen(true);
     } else {
       console.log(`${searchQueryTemp} is not a address`);
       setModalType("notSearch");
       setIsOpen(true)
     }
-  }, [searchQuery, enterSearch]);
+  }, [searchQuery, enterSearch, account]);
 
   const showModal = (open: boolean) => {
     setIsOpen(open);
