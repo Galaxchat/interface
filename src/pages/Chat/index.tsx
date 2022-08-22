@@ -40,7 +40,6 @@ export default function Chat({ history }: RouteComponentProps) {
       <AppBody>
         <Wrapper
           style={{
-            // border: "1px solid rgb(237, 238, 242)",
             padding: "26px",
             borderRadius: "16px",
           }}

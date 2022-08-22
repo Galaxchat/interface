@@ -30,7 +30,7 @@ export default function ChatSearch(props: any) {
     const isAddressSearch = isAddress(searchQueryTemp);
     if (isAddressSearch && account) {
       setEnterSearch(isAddressSearch)
-    } else if (!account ) {
+    } else if (!account) {
       setModalType("notConnect")
       setIsOpen(true);
     } else {
@@ -51,24 +51,20 @@ export default function ChatSearch(props: any) {
 
   return (
     <>
-      <AutoRow justify="center">
-        <AutoColumn gap={"sm"}>
-          <SearchInput
-            type="text"
-            id="address-search-input"
-            placeholder={t`Search address`}
-            autoComplete="off"
-            value={searchQuery}
-            ref={inputRef as RefObject<HTMLInputElement>}
-            onChange={handleInput}
-            style={{ padding: "10px" }}
-          />
-        </AutoColumn>
-        <AutoColumn>
-          <ButtonSecondary onClick={onClickSearch} style={{ marginLeft: "10px" }}>
-            <Trans>Search</Trans>
-          </ButtonSecondary>
-        </AutoColumn>
+      <AutoRow justify="center" style={{maxWidth: "800px", display:"flex"}} >
+        <SearchInput
+          type="text"
+          id="address-search-input"
+          placeholder={t`Search address`}
+          autoComplete="off"
+          value={searchQuery}
+          ref={inputRef as RefObject<HTMLInputElement>}
+          onChange={handleInput}
+          style={{ width: "50%" }}
+        />
+        <ButtonSecondary onClick={onClickSearch} style={{ marginLeft: "10px", width:"64px" }}>
+          <Trans>Search</Trans>
+        </ButtonSecondary>
       </AutoRow>
       {modalType ?
         <ChatModalType

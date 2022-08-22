@@ -118,7 +118,7 @@ export default function ChatProgress(props: any) {
         <span className="progress-hint">Chatroom token are being created</span>
       </AutoRow>
       <AutoRow justify="space-between">
-        <AutoColumn style={{ width: "90%" }}>
+        <AutoColumn style={{ width: "80%" }}>
           <div className="g-progress">
             {minFund
               ? currentFund + " ETH / " + minFund + " ETH"
