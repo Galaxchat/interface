@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import Loader from "components/Loader";
 import { t, Trans } from "@lingui/macro";
 import { ButtonSecondary } from "../Button";
@@ -14,6 +14,22 @@ export default function ChatRoomNameBar(props: any) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [info, setInfo] = useState<string>("");
   const { contract, account, chatRoomInfo, percentage, changeRoomInfo } = props;
+
+
+  const getTokenAmount = useCallback(async () => {
+    if (account && contract && chatRoomInfo?.address){
+      const chatRoomAddress = chatRoomInfo.address
+      console.log("chatRoomAddress1:",chatRoomAddress)
+      console.log("owner1:",account)
+      const tokenAmount = await contract.getClaimAmount(chatRoomAddress, account)
+      console.log("tokenAmount", tokenAmount)
+
+    }
+  }, [chatRoomInfo, account])
+
+  useEffect(() => {
+    getTokenAmount()
+  }, [chatRoomInfo, account])
 
 
   const onClickCreateToken = useCallback(async () => {
