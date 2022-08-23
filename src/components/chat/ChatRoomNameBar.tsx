@@ -23,16 +23,16 @@ export default function ChatRoomNameBar(props: any) {
       if (percentage >= 100) {
         setLoading(true)
         try {
-        const createToken = await contract.createToken(chatRoomAddress)
-        createToken.wait().then(async () => {
-          setLoading(false);
-        });
+          const createToken = await contract.createToken(chatRoomAddress)
+          createToken.wait().then(async () => {
+            setLoading(false);
+          });
         } catch (e) {
           setLoading(false);
           setModalType("transactionError");
           const reg = /Error: (.*) \[/;
-          const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) :""
-          const text = regResult? regResult[1].trim() : "It seems something wrong";
+          const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) : ""
+          const text = regResult ? regResult[1].trim() : "It seems something wrong";
           setInfo(text)
           setIsOpen(true);
         }
@@ -43,7 +43,7 @@ export default function ChatRoomNameBar(props: any) {
     } else if (token) {
       setModalType("tokenCreated")
       setIsOpen(true)
-    }else if (!account) {
+    } else if (!account) {
       setModalType("notConnect")
       setIsOpen(true);
     } else if (!chatRoomAddress) {
@@ -77,7 +77,10 @@ export default function ChatRoomNameBar(props: any) {
               }}
             ></Logo>
           }
-          Chatroom{chatRoomInfo && chatRoomInfo.name ? '@' + chatRoomInfo.name : ''}
+          Chatroom{chatRoomInfo?.name ?
+            chatRoomInfo?.name.length <= 18 ?
+              '@' + chatRoomInfo.name : "@" + chatRoomInfo.name.substr(0, 6) + "...." + chatRoomInfo.name.substr(-4)
+            : ''}
         </AutoRow>
       </AutoColumn>
       <AutoColumn justify="flex-end" style={{}}>
@@ -93,7 +96,7 @@ export default function ChatRoomNameBar(props: any) {
       </AutoColumn>
       {modalType ?
         <ChatModalType
-          showModal={(open:boolean) =>{ setIsOpen(open)}}
+          showModal={(open: boolean) => { setIsOpen(open) }}
           type={modalType}
           isOpen={isOpen}
           info={info}
