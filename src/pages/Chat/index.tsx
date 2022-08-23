@@ -13,6 +13,7 @@ import { Separator } from "../../components/chat/styleds";
 import useActiveWeb3React from "hooks/useActiveWeb3React";
 import ChatProgress from "components/chat/ChatProgress";
 import ChatRoomNameBar from "components/chat/ChatRoomNameBar";
+import ChatPrice from "components/chat/ChatPrice";
 
 
 export default function Chat({ history }: RouteComponentProps) {
@@ -45,15 +46,27 @@ export default function Chat({ history }: RouteComponentProps) {
           }}
         >
           <AutoColumn gap={"md"}>
-            <AutoRow justify="center" style={{}}>
-              <ChatProgress
-                contract={chatLaunchPadContract}
-                account={account}
-                chatRoomInfo={chatRoomInfo ? chatRoomInfo : undefined}
-                changePercentage={changePercentage}
-                changeRoomInfo={changeRoomInfo}
-              />
-            </AutoRow>
+            <Separator />
+            {console.log(chatRoomInfo)}
+            { chatRoomInfo?.token ? 
+              <AutoRow justify="center" style={{}}>
+                <ChatPrice
+                  contract={chatLaunchPadContract}
+                  account={account}
+                  chatRoomInfo={chatRoomInfo ? chatRoomInfo : undefined}
+                />
+              </AutoRow>
+              :
+              <AutoRow justify="center" style={{}}>
+                <ChatProgress
+                  contract={chatLaunchPadContract}
+                  account={account}
+                  chatRoomInfo={chatRoomInfo ? chatRoomInfo : undefined}
+                  changePercentage={changePercentage}
+                  changeRoomInfo={changeRoomInfo}
+                />
+              </AutoRow>
+            }
             <Separator />
             <AutoRow justify="space-between" style={{}}>
               <ChatRoomNameBar
