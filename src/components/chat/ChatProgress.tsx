@@ -52,10 +52,14 @@ export default function ChatProgress(props: any) {
     }
     if (contract && account && chatRoomInfo?.address) {
       const chatroomStatus = await contract.chatroomStatus(chatRoomInfo?.address);
-      // if (chatroomStatus.token != "0x0000000000000000000000000000000000000000") {
-      //   const tempROOMinfo = { ...chatRoomInfo, token: chatroomStatus.token }
-      //   changeRoomInfo(tempROOMinfo)
-      // }
+      console.log("chatroomStatus:",chatroomStatus)
+      let tempRoomInfo = { ...chatRoomInfo}
+      if (chatroomStatus.token != "0x0000000000000000000000000000000000000000" && chatRoomInfo.token != chatroomStatus.token) {
+        tempRoomInfo.token = chatroomStatus.token
+        tempRoomInfo.pair = chatroomStatus.pair
+        changeRoomInfo(tempRoomInfo)
+      }
+
       setCurrentFund(
         parseFloat(chatroomStatus.totalFund.toString()) / 10 ** 18
       );
@@ -114,6 +118,7 @@ export default function ChatProgress(props: any) {
 
   return (
     <>
+    {console.log("progress")}
       <AutoRow justify="center">
         <span className="progress-hint">Chatroom token are being created</span>
       </AutoRow>

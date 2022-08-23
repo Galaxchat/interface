@@ -123,6 +123,6 @@ export const GALAX_CHAT_ADDRESSES: AddressMap = {
 export const GALAX_LAUNCHPAD_ADDRESSES: AddressMap = {
   [SupportedChainId.MAINNET]: '',
   [SupportedChainId.ROPSTEN]: '',
-  [SupportedChainId.GOERLI]: '0xB0Bd3C935FA84d4E38E2b243e62E6f4119352D25',
+  [SupportedChainId.GOERLI]: '0x8200Fd5224821F0CfAeF2957700265faFE46b5aC',
   [SupportedChainId.RINKEBY]: '',
 }

@@ -5,6 +5,7 @@ import { useContract } from 'hooks/useContract'
 import { ethers } from "ethers";
 import { useEffect, useState, useMemo } from "react";
 import ERC721_ABI from 'abis/erc721.json'
+import GALAX_CHAT_PAIR_ABI from 'abis/glax-chat-pair.json'
 import { isAddress } from "../utils";
 import axios from 'axios'
 
@@ -20,6 +21,10 @@ export function useChatContract() {
 
 export function useLaunchPadContract() {
   return useContract(GALAX_LAUNCHPAD_ADDRESSES, LAUNCHPAD_ABI, true)
+}
+
+export function usePairContract(pair:string) {
+  return useContract(pair, GALAX_CHAT_PAIR_ABI, false)
 }
 
 

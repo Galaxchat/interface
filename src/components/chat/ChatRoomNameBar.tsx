@@ -15,23 +15,6 @@ export default function ChatRoomNameBar(props: any) {
   const [info, setInfo] = useState<string>("");
   const { contract, account, chatRoomInfo, percentage, changeRoomInfo } = props;
 
-
-  const getTokenAmount = useCallback(async () => {
-    if (account && contract && chatRoomInfo?.address){
-      const chatRoomAddress = chatRoomInfo.address
-      console.log("chatRoomAddress1:",chatRoomAddress)
-      console.log("owner1:",account)
-      const tokenAmount = await contract.getClaimAmount(chatRoomAddress, account)
-      console.log("tokenAmount", tokenAmount)
-
-    }
-  }, [chatRoomInfo, account])
-
-  useEffect(() => {
-    getTokenAmount()
-  }, [chatRoomInfo, account])
-
-
   const onClickCreateToken = useCallback(async () => {
     const token = chatRoomInfo?.token
     const chatRoomAddress = chatRoomInfo?.address
@@ -42,6 +25,13 @@ export default function ChatRoomNameBar(props: any) {
           const createToken = await contract.createToken(chatRoomAddress)
           createToken.wait().then(async () => {
             setLoading(false);
+            const chatroomStatus = await contract.chatroomStatus(chatRoomInfo?.address);
+            let tempRoomInfo = { ...chatRoomInfo}
+            if (chatroomStatus.token != "0x0000000000000000000000000000000000000000" && chatRoomInfo.token != chatroomStatus.token) {
+              tempRoomInfo.token = chatroomStatus.token
+              tempRoomInfo.pair = chatroomStatus.pair
+              changeRoomInfo(tempRoomInfo)
+            }
           });
         } catch (e) {
           setLoading(false);
@@ -99,17 +89,21 @@ export default function ChatRoomNameBar(props: any) {
             : ''}
         </AutoRow>
       </AutoColumn>
-      <AutoColumn justify="flex-end" style={{}}>
-        {loading ?
-          <ButtonSecondary style={{ pointerEvents: "none" }}>
-            <Loader />
-          </ButtonSecondary>
-          :
-          <ButtonSecondary onClick={onClickCreateToken}>
-            <Trans> CreateToken</Trans>
-          </ButtonSecondary>
-        }
-      </AutoColumn>
+      {chatRoomInfo?.token ?
+        null
+        :
+        <AutoColumn justify="flex-end" style={{}}>
+          {loading ?
+            <ButtonSecondary style={{ pointerEvents: "none" }}>
+              <Loader />
+            </ButtonSecondary>
+            :
+            <ButtonSecondary onClick={onClickCreateToken}>
+              <Trans> CreateToken</Trans>
+            </ButtonSecondary>
+          }
+        </AutoColumn>
+      }
       {modalType ?
         <ChatModalType
           showModal={(open: boolean) => { setIsOpen(open) }}

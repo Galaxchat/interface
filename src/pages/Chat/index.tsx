@@ -1,5 +1,5 @@
 import { Trans } from "@lingui/macro";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "../../components/Row";
@@ -31,8 +31,25 @@ export default function Chat({ history }: RouteComponentProps) {
     setPercentage(percentage)
   }
 
+  const updateRoomInfo = useCallback(async () => {
+    if (chatLaunchPadContract && account && chatRoomInfo?.address) {
+      const chatroomStatus = await chatLaunchPadContract.chatroomStatus(chatRoomInfo?.address);
+      let tempRoomInfo = { ...chatRoomInfo }
+      if (chatroomStatus.token != "0x0000000000000000000000000000000000000000" && chatRoomInfo.token != chatroomStatus.token) {
+        tempRoomInfo.token = chatroomStatus.token
+        tempRoomInfo.pair = chatroomStatus.pair
+        changeRoomInfo(tempRoomInfo)
+      }
+    }
+  }, [account, chatRoomInfo, chatLaunchPadContract])
+
+  useEffect(() => {
+    updateRoomInfo()
+  }, [account, chatRoomInfo, chatLaunchPadContract])
+
   return (
     <>
+      {console.log("Chat chatRoomInfo:", chatRoomInfo)}
       <ChatSearch
         chatContract={chatUniSendContract}
         account={account}
@@ -47,11 +64,10 @@ export default function Chat({ history }: RouteComponentProps) {
         >
           <AutoColumn gap={"md"}>
             <Separator />
-            {console.log(chatRoomInfo)}
-            { chatRoomInfo?.token ? 
+            {chatRoomInfo?.token ?
               <AutoRow justify="center" style={{}}>
                 <ChatPrice
-                  contract={chatLaunchPadContract}
+                  lpContract={chatLaunchPadContract}
                   account={account}
                   chatRoomInfo={chatRoomInfo ? chatRoomInfo : undefined}
                 />
