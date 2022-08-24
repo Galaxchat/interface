@@ -98,7 +98,7 @@ export default function ChatPrice(props: any) {
           <ButtonSecondary 
           style={{ marginLeft: "3px" }}
           onClick= {()=>{
-            window.open("https://app.uniswap.org/#/swap")}}
+            window.open(`https://app.uniswap.org/#/swap?outputCurrency=${chatRoomInfo.token}`)}}
           >
             <Trans>Trade</Trans>
           </ButtonSecondary>
