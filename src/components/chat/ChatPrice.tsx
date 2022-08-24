@@ -22,9 +22,20 @@ export default function ChatPrice(props: any) {
   const chatPairContract = usePairContract(pair);
   const getPrice = useCallback(async () => {
     if (chatPairContract && pair) {
+      console.log("pair:", pair)
+      const weth = await lpContract.WETH();
+      const token0 = await chatPairContract.token0()
+      const token1 = await chatPairContract.token1()
+      // console.log(`weth：${weth}, token0: ${token0}, token1: ${token1}`)
+
       const reservers = await chatPairContract.getReserves();
-      let price = reservers._reserve1 / reservers._reserve0;
-      setPrice(price.toFixed(18));
+      let finalPrice = 0
+      if (weth === token0) {
+        finalPrice = reservers._reserve0 / reservers._reserve1;
+      } else {
+        finalPrice = reservers._reserve1 / reservers._reserve0;
+      }
+      setPrice(finalPrice.toFixed(18));
     }
   }, [chatPairContract, account, chatRoomInfo, pair])
 
