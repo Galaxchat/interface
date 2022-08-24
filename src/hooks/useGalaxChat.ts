@@ -45,13 +45,14 @@ export function useChatRoomInfo(address: string) {
         }
         try {
           const tokenURI = await contract?.tokenURI(0);
+          const ipfsWeb = "https://ipfs.io/ipfs/" //https://dweb.link/ipfs/
           if (tokenURI) {
-            const tokenURL = tokenURI.replace("ipfs://", "https://dweb.link/ipfs/")
+            const tokenURL = tokenURI.replace("ipfs://", ipfsWeb)
 
             await axios.get(tokenURL)
               .then((res) => {
                 if (res.data.image && res.data.image.startsWith("ipfs://")) {
-                  imageURL = res.data.image.replace("ipfs://", "https://dweb.link/ipfs/")
+                  imageURL = res.data.image.replace("ipfs://", ipfsWeb)
                 }
               })
               .catch((err) => {
