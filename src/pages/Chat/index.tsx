@@ -49,7 +49,6 @@ export default function Chat({ history }: RouteComponentProps) {
 
   return (
     <>
-      {console.log("Chat chatRoomInfo:", chatRoomInfo)}
       <ChatSearch
         chatContract={chatUniSendContract}
         account={account}

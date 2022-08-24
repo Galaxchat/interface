@@ -15998,3 +15998,9 @@ emoji-picker {
         background-position: -2000vw;
     }
 }
+
+
+.token-price{
+    /* width: 70%; */
+    text-align: center;
+}

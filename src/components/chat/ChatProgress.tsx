@@ -52,7 +52,6 @@ export default function ChatProgress(props: any) {
     }
     if (contract && account && chatRoomInfo?.address) {
       const chatroomStatus = await contract.chatroomStatus(chatRoomInfo?.address);
-      console.log("chatroomStatus:",chatroomStatus)
       let tempRoomInfo = { ...chatRoomInfo}
       if (chatroomStatus.token != "0x0000000000000000000000000000000000000000" && chatRoomInfo.token != chatroomStatus.token) {
         tempRoomInfo.token = chatroomStatus.token
@@ -82,9 +81,7 @@ export default function ChatProgress(props: any) {
       } catch (e) {
         setLoading(false);
         setModalType("transactionError");
-        const reg = /Error: (.*) \[/;
-        const regResult = reg.exec(e.toString()) ? reg.exec(e.toString()) :""
-        const text = regResult? regResult[1].trim() : "It seems something wrong";
+        const text = e.message
         setInfo(text)
         setIsOpen(true);
       }
