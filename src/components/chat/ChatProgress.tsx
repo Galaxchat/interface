@@ -22,8 +22,10 @@ export default function ChatProgress(props: any) {
 
 
   useEffect(() => {
-    getProgress();
+    let isUnmount = false; 
+    getProgress(isUnmount);
     changeProgress();
+    return () => {isUnmount = true};
   }, [contract, account, chatRoomInfo, currentFund, minFund]);
 
   const changeProgress = useCallback(() => {
@@ -45,10 +47,11 @@ export default function ChatProgress(props: any) {
     }
   }, [currentFund, minFund]);
 
-  const getProgress = useCallback(async () => {
+  const getProgress = useCallback(async (isUnmount?) => {
     if (contract) {
       const getMinFund = await contract.minETHAmount();
-      setMinFund(parseFloat(getMinFund.toString()) / 10 ** 18);
+      if ( !isUnmount || isUnmount=== undefined) {
+        setMinFund(parseFloat(getMinFund.toString()) / 10 ** 18);}
     }
     if (contract && account && chatRoomInfo?.address) {
       const chatroomStatus = await contract.chatroomStatus(chatRoomInfo?.address);
@@ -115,7 +118,6 @@ export default function ChatProgress(props: any) {
 
   return (
     <>
-    {console.log("progress")}
       <AutoRow justify="center">
         <span className="progress-hint">Chatroom token are being created</span>
       </AutoRow>
