@@ -5,7 +5,7 @@ import { AutoColumn } from "../../components/Column";
 import { AutoRow } from "../../components/Row";
 import { Wrapper } from "../../components/swap/styleds";
 import AppBody from "../AppBody";
-import { useChatContract, useLaunchPadContract } from '../../hooks/useGalaxChat'
+import { useChatContract, useLaunchPadContract, useIpfsClient } from '../../hooks/useGalaxChat'
 import ChatSend from "components/chat/ChatSend";
 import ChatContent from "components/chat/ChatContent";
 import ChatSearch from "components/chat/ChatSearch";
@@ -15,13 +15,13 @@ import ChatProgress from "components/chat/ChatProgress";
 import ChatRoomNameBar from "components/chat/ChatRoomNameBar";
 import ChatPrice from "components/chat/ChatPrice";
 
-
 export default function Chat({ history }: RouteComponentProps) {
   const [chatRoomInfo, setChatRoomeInfo] = useState<any>({ name: undefined, imageURL: undefined, address: undefined })
   const chatUniSendContract = useChatContract()
   const chatLaunchPadContract = useLaunchPadContract()
   const { account } = useActiveWeb3React()
   const [percentage, setPercentage] = useState<any>()
+  const chatIpfsClient = useIpfsClient()
 
   const changeRoomInfo = (data: any) => {
     setChatRoomeInfo(data)
@@ -35,7 +35,7 @@ export default function Chat({ history }: RouteComponentProps) {
     if (chatLaunchPadContract && account && chatRoomInfo?.address) {
       const chatroomStatus = await chatLaunchPadContract.chatroomStatus(chatRoomInfo?.address);
       let tempRoomInfo = { ...chatRoomInfo }
-      if (chatroomStatus.token != "0x0000000000000000000000000000000000000000" && chatRoomInfo.token != chatroomStatus.token) {
+      if (chatroomStatus.token !== "0x0000000000000000000000000000000000000000" && chatRoomInfo.token !== chatroomStatus.token) {
         tempRoomInfo.token = chatroomStatus.token
         tempRoomInfo.pair = chatroomStatus.pair
         changeRoomInfo(tempRoomInfo)
@@ -98,6 +98,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 chatContract={chatUniSendContract}
                 account={account}
                 enterQuery={chatRoomInfo ? chatRoomInfo.address : undefined}
+                chatIpfsClient={chatIpfsClient}
               />
             </AutoRow>
             <Separator style={{}} />
@@ -106,6 +107,7 @@ export default function Chat({ history }: RouteComponentProps) {
                 chatContract={chatUniSendContract}
                 chatRoomAddress={chatRoomInfo ? chatRoomInfo.address : undefined}
                 account={account}
+                chatIpfsClient={chatIpfsClient}
               />
             </AutoRow>
           </AutoColumn>

@@ -124,7 +124,7 @@ export default function ChatProgress(props: any) {
       <AutoRow justify="space-between">
         <AutoColumn style={{ width: "80%" }}>
           <div className="g-progress">
-            {minFund
+            {minFund && account
               ? currentFund + " ETH / " + minFund + " ETH"
               : "please connect wallet"}
           </div>

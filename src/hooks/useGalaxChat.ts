@@ -7,13 +7,14 @@ import { useEffect, useState, useMemo } from "react";
 import ERC721_ABI from 'abis/erc721.json'
 import GALAX_CHAT_PAIR_ABI from 'abis/glax-chat-pair.json'
 import { isAddress } from "../utils";
-import axios from 'axios'
+import axios from 'axios';
 
+var ipfsClient = require('ipfs-http-client')
 
-
-const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
+const INFURA_KEY = process.env.REACT_APP_INFURA_KEY;
 const provider = ethers.providers.getDefaultProvider("homestead", { infura: INFURA_KEY });
-
+const projectId = process.env.INFURA_PROJECT_ID ? process.env.INFURA_PROJECT_ID: "2DvTPzcWTIxjbqO7QARZ5tnNWQ9";  
+const projectSecret = process.env.INFURA_PROJECT_SECRET?process.env.INFURA_PROJECT_SECRET : "7dd1dba18ffa6b635a6f7194408f1bbe";
 
 export function useChatContract() {
   return useContract(GALAX_CHAT_ADDRESSES, CHAT_ABI, true)
@@ -23,10 +24,26 @@ export function useLaunchPadContract() {
   return useContract(GALAX_LAUNCHPAD_ADDRESSES, LAUNCHPAD_ABI, true)
 }
 
-export function usePairContract(pair:string) {
+export function usePairContract(pair: string) {
   return useContract(pair, GALAX_CHAT_PAIR_ABI, false)
 }
 
+export function useIpfsClient() {
+  const client =  () => {
+    const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+    return  ipfsClient({
+      host: 'ipfs.infura.io',
+      port: '5001',
+      protocol: 'https',
+      headers: {
+        authorization: auth,
+        // "Access-Control-Allow-Origin": "*",
+        // "Access-Control-Allow-Methods": ["PUT", "POST", "GET"]
+      }
+    })
+  }
+  return client()
+}
 
 export function useChatRoomInfo(address: string) {
   const [roomInfo, setRoomInfo] = useState<object>()
@@ -86,7 +103,6 @@ export function useDefaultENS(address: string) {
       setLoading(true);
       if (address && ethers.utils.isAddress(address)) {
         try {
-          // const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
           // const provider = ethers.providers.getDefaultProvider("homestead", { infura: INFURA_KEY });
           let ensName = await provider.lookupAddress(address);
           const resolver = ensName ? await provider.getResolver(ensName) : null;

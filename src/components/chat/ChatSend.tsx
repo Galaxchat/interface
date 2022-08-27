@@ -1,6 +1,7 @@
 import {
   useState,
-  useCallback
+  useCallback,
+  useEffect
 } from "react";
 import { AutoRow } from "components/Row";
 import { ButtonSecondary } from "../../components/Button";
@@ -23,15 +24,23 @@ export default function ChatSend(props: any) {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   );
-  const { chatContract, account, chatRoomAddress } = props;
+  const { chatContract, account, chatRoomAddress, chatIpfsClient } = props;
 
+  const sendIpfs = async (input:string) => {
+    let content = Buffer.from(input)
+    const addList =  await chatIpfsClient.add(content)
+    // console.log("addList: ",addList)
+    const { hash, path } = addList[0]
+    return path
+  }
 
   const onClickSend = useCallback(async () => {
     const input = editorState.getCurrentContent().getPlainText("\n");
     if (account && chatContract && chatRoomAddress && input !== "") {
       setLoading(true);
+      const path = await sendIpfs(input);
       chatContract
-        ?.send(chatRoomAddress, account, input, {})
+        ?.send(chatRoomAddress, account, path, {})
         .then((tx: TransactionResponse) => {
           setEditorState(() => EditorState.createEmpty())
           setLoading(false);
