@@ -65,23 +65,20 @@ export default function ChatContent(props: any) {
     for (var i = 0; i < fileData.length; i++) {
       dataString += String.fromCharCode(fileData[i]);
     }
-
     return dataString
-
   }
 
   async function catFromIpfs(cid: string) {
     let content = cid
-    try {
-      const source = await chatIpfsClient.cat(cid)
-      // for await (const chunk of source) {
-      //   chunks.push(chunk)
-      // }
-      // console.log(Buffer.concat(source).toString())
-      content = Uint8ArrayToString(source)
+    if (content.startsWith("ipfs://")) {
+      content = content.replace("ipfs://", "/ipfs/")
+      try {
+        const source = await chatIpfsClient.cat(content)
+        content = Uint8ArrayToString(source)
+      } catch (error) {
+        console.log(error)
+      }
 
-    } catch (error) {
-      // console.log(error)
     }
     return content
   }
@@ -103,10 +100,12 @@ export default function ChatContent(props: any) {
                   blockHash: data.blockHash
                 }
                 const listLength = contentListIpfs.push(obj)
+                contentListIpfs.sort((a: any, b: any) => { return a.timestamp > b.timestamp ? 1 : -1 })
                 setListLength(listLength)
               }
             )
           })
+
           setContentList(contentListIpfs)
           chatContract.on(eventFilter, (_chatroom: string, _sender: string, _content: string, id: BigNumber, timestamp: BigNumber, blockHash: string) => {
             catFromIpfs(_content).then(
@@ -118,6 +117,7 @@ export default function ChatContent(props: any) {
                   blockHash: blockHash
                 }
                 contentListIpfs.push(cobj)
+                contentListIpfs.sort((a: any, b: any) => { return a.timestamp > b.timestamp ? 1 : -1 })
 
                 // distinct data
                 let distinctContenList = []
@@ -137,7 +137,6 @@ export default function ChatContent(props: any) {
         .catch((e: Error) => {
           console.log(e);
         })
-
     }
     return () => {
       if (chatContract) {

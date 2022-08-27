@@ -31,7 +31,7 @@ export default function ChatSend(props: any) {
     const addList =  await chatIpfsClient.add(content)
     // console.log("addList: ",addList)
     const { hash, path } = addList[0]
-    return path
+    return `ipfs://${path}`
   }
 
   const onClickSend = useCallback(async () => {
