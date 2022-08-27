@@ -2,7 +2,7 @@ import useScrollPosition from '@react-hook/window-scroll'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useTheme from 'hooks/useTheme'
 import styled from 'styled-components/macro'
-import ChatLogo from '../../assets/images/logo-32x32.png'
+import ChatLogo from '../../assets/images/gc.png'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
@@ -49,6 +49,7 @@ const HeaderControls = styled.div`
   flex-direction: row;
   align-items: center;
   justify-self: flex-end;
+  position: absolute;
 `
 
 const HeaderElement = styled.div`
